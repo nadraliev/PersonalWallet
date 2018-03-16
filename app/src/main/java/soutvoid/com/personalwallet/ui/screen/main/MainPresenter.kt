@@ -1,11 +1,11 @@
 package soutvoid.com.personalwallet.ui.screen.main
 
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
-import soutvoid.com.personalwallet.domain.EntryType
+import soutvoid.com.personalwallet.domain.transactionentry.EntryType
+import soutvoid.com.personalwallet.ui.base.BasePresenter
 
 @InjectViewState
-class MainPresenter : MvpPresenter<MainView>() {
+class MainPresenter : BasePresenter<MainView>() {
 
     fun onAddEntry(entryType: EntryType) {
         viewState?.openAddEntry(entryType)

@@ -1,6 +1,6 @@
 package soutvoid.com.personalwallet.ui.screen.addentry
 
-import soutvoid.com.personalwallet.domain.EntryType
+import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.base.BaseView
 
 interface AddEntryView : BaseView {

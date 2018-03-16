@@ -4,20 +4,29 @@ import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.facebook.stetho.Stetho
+import com.github.salomonbrys.kodein.*
+import com.github.salomonbrys.kodein.android.autoAndroidModule
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import soutvoid.com.personalwallet.interactor.transactionentry.CategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
 
 
 /**
  * Created by andrew on 16.03.18.
  */
-class App: Application() {
+class App : Application(), KodeinAware {
+
+    companion object {
+        lateinit var instance: App
+    }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         initLogger()
         initRealm()
         initStetho()
@@ -46,5 +55,12 @@ class App: Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
+    }
+
+    override val kodein by Kodein.lazy {
+        import(autoAndroidModule(this@App))
+
+        bind<Realm>() with singleton { Realm.getDefaultInstance() }
+        bind<ICategoryRepository>() with singleton { CategoryRepository(instance()) }
     }
 }

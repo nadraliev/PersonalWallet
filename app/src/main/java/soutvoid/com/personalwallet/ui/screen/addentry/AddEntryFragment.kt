@@ -5,16 +5,19 @@ import android.support.v4.content.ContextCompat
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.arellomobile.mvp.presenter.ProvidePresenterTag
 import org.jetbrains.anko.support.v4.withArguments
 import soutvoid.com.personalwallet.R
-import soutvoid.com.personalwallet.domain.EntryType
-import soutvoid.com.personalwallet.domain.Income
-import soutvoid.com.personalwallet.domain.Outcome
+import soutvoid.com.personalwallet.app.App
+import soutvoid.com.personalwallet.domain.transactionentry.EntryType
+import soutvoid.com.personalwallet.domain.transactionentry.Income
+import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
-import soutvoid.com.personalwallet.ui.util.*
+import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
 import soutvoid.com.personalwallet.ui.util.delegates.argument
+import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
+import soutvoid.com.personalwallet.ui.util.getColorResId
+import soutvoid.com.personalwallet.ui.util.getDarkColorResId
 
 class AddEntryFragment : BaseFragment(), AddEntryView {
     companion object {
@@ -29,26 +32,22 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
 
     private val entryType by argument<EntryType>(ENTRY_TYPE)
 
-    @ProvidePresenterTag(presenterClass = AddEntryPresenter::class, type = PresenterType.GLOBAL)
-    fun provideAddEntryPresenterTag(): String =
-            entryType!!.getName().toString()
-
     @ProvidePresenter(type = PresenterType.GLOBAL)
     fun provideAddEntryPresenter(): AddEntryPresenter {
-        entryType!!.let { return AddEntryPresenter(it) }
+        entryType!!.let { return AddEntryPresenter(App.instance.kodein, it) }
     }
 
     override fun getLayoutResId(): Int = R.layout.fragment_add_entry
 
     override fun setToolbarColorForEntryType(entryType: EntryType) {
-        val colorResId = entryType.getColor()
+        val colorResId = entryType.getColorResId()
         (activity as? ActivityWithToolbar)?.let {
             it.toolbar.setBackgroundColor(ContextCompat.getColor(it, colorResId))
         }
     }
 
     override fun setStatusBarColorForEntryType(entryType: EntryType) {
-        val colorResId = entryType.getDarkColor()
+        val colorResId = entryType.getDarkColorResId()
         (activity as? ActivityWithToolbar)?.let {
             doIfSdkAtLeast(Build.VERSION_CODES.LOLLIPOP) {
                 it.window.statusBarColor = ContextCompat.getColor(it, colorResId)

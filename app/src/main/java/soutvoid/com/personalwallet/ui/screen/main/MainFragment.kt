@@ -6,7 +6,7 @@ import android.view.View
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import soutvoid.com.personalwallet.R
-import soutvoid.com.personalwallet.domain.EntryType
+import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.screen.addentry.AddEntryActivity
 import soutvoid.com.personalwallet.ui.screen.main.adapter.AddEntrySpeedDialAdapter
