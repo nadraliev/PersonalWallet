@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PersonalWallet</string>
+    <string name="common_entry_type_name_income">Income</string>
+    <string name="common_entry_type_name_outcome">Outcome</string>
 </resources>
