@@ -4,7 +4,6 @@ import com.arellomobile.mvp.InjectViewState
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.with
-import com.orhanobut.logger.Logger
 import io.realm.Realm
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
@@ -27,7 +26,7 @@ class AddEntryPresenter(kodein: Kodein,
     }
 
     private fun loadCategories() {
-        Logger.d(categoryRepository.getAll())
+
     }
 
     override fun onDestroy() {
