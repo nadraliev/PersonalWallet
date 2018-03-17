@@ -21,6 +21,8 @@ sealed class EntryType : Serializable {
         is Income -> TYPE_INCOME_NAME
         is Outcome -> TYPE_OUTCOME_NAME
     }
+
+    override fun toString(): String = getName()
 }
 
 object Income : EntryType(), Serializable

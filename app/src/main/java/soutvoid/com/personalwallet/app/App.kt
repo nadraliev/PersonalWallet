@@ -13,6 +13,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import soutvoid.com.personalwallet.interactor.transactionentry.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
+import soutvoid.com.personalwallet.ui.util.PresenterScope
 
 
 /**
@@ -60,7 +61,7 @@ class App : Application(), KodeinAware {
     override val kodein by Kodein.lazy {
         import(autoAndroidModule(this@App))
 
-        bind<Realm>() with singleton { Realm.getDefaultInstance() }
-        bind<ICategoryRepository>() with singleton { CategoryRepository(instance()) }
+        bind<Realm>() with scopedSingleton(PresenterScope) { Realm.getDefaultInstance() }
+        bind<ICategoryRepository>() with scopedSingleton(PresenterScope) { CategoryRepository(with(it).instance()) }
     }
 }

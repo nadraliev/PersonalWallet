@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.arellomobile.mvp.presenter.ProvidePresenterTag
 import org.jetbrains.anko.support.v4.withArguments
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.app.App
@@ -31,6 +32,9 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
     lateinit var mAddEntryPresenter: AddEntryPresenter
 
     private val entryType by argument<EntryType>(ENTRY_TYPE)
+
+    @ProvidePresenterTag(presenterClass = AddEntryPresenter::class, type = PresenterType.GLOBAL)
+    fun provideAddEntryPresenterTag(): String = entryType.toString()
 
     @ProvidePresenter(type = PresenterType.GLOBAL)
     fun provideAddEntryPresenter(): AddEntryPresenter {

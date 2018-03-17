@@ -3,6 +3,7 @@ package soutvoid.com.personalwallet.ui.screen.addentry
 import com.arellomobile.mvp.InjectViewState
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.with
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
 import soutvoid.com.personalwallet.ui.base.BasePresenter
@@ -12,7 +13,7 @@ class AddEntryPresenter(kodein: Kodein,
                         private val entryType: EntryType)
     : BasePresenter<AddEntryView>(kodein) {
 
-    val categoryRepository: ICategoryRepository by instance()
+    val categoryRepository: ICategoryRepository by with(this).instance()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

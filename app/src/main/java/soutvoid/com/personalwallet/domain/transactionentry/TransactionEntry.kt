@@ -1,17 +1,19 @@
 package soutvoid.com.personalwallet.domain.transactionentry
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import soutvoid.com.personalwallet.domain.IBaseEntity
 import java.io.Serializable
 
 /**
  * Created by andrew on 16.03.18.
  */
-open class TransactionEntry(var id: String = "",
-                            private var entryTypeName: String = "income",
+open class TransactionEntry(private var entryTypeName: String = "income",
                             var categoryId: Category? = null,
                             var creationDate: Long = System.currentTimeMillis() / 1000,
                             var moneyValue: Long = 0,
-                            var comment: String = "") : RealmObject(), Serializable {
+                            var comment: String = "",
+                            @PrimaryKey override var id: Long = 0) : RealmObject(), Serializable, IBaseEntity {
 
     fun getEntryType() = EntryType.getByName(entryTypeName)
 
