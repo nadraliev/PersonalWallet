@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.util.getColorResId
 import soutvoid.com.personalwallet.ui.util.getIconResId
+import soutvoid.com.personalwallet.ui.util.getNameResId
 import uk.co.markormesher.android_fab.SpeedDialMenuAdapter
 import uk.co.markormesher.android_fab.SpeedDialMenuItem
 
@@ -25,7 +26,7 @@ class AddEntrySpeedDialAdapter(private val context: Context,
 
     override fun getMenuItem(context: Context, position: Int): SpeedDialMenuItem =
             with(entryTypes[position]) {
-                SpeedDialMenuItem(context, getIconResId(), getName())
+                SpeedDialMenuItem(context, getIconResId(), getNameResId())
             }
 
     override fun getBackgroundColour(position: Int): Int =
