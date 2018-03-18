@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="addentry_form_vertical_spacing">24dp</dimen>
+    <dimen name="addentry_form_vertical_spacing">14dp</dimen>
+    <dimen name="addentry_form_horizontal_spacing">24dp</dimen>
+    <dimen name="addentry_section_min_heigth">56dp</dimen>
 </resources>
