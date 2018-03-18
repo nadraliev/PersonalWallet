@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import butterknife.ButterKnife
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.orhanobut.logger.Logger
+import com.tinsuke.icekick.extension.freezeInstanceState
+import com.tinsuke.icekick.extension.unfreezeInstanceState
 
 abstract class BaseFragment : MvpAppCompatFragment() {
     companion object {
@@ -42,4 +44,13 @@ abstract class BaseFragment : MvpAppCompatFragment() {
 
     protected abstract fun getLayoutResId(): Int
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        freezeInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        unfreezeInstanceState(savedInstanceState)
+    }
 }

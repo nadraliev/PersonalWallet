@@ -22,9 +22,12 @@ class AddEntryActivity : ActivityWithToolbar() {
     companion object {
         fun getIntent(context: Context, entryType: EntryType): Intent =
                 context.intentFor<AddEntryActivity>(ENTRY_TYPE to entryType)
+
+        const val FRAGMENT_TAG = "addEntryFragmentTag"
     }
 
     private val entryType by extra<EntryType>(ENTRY_TYPE)
+    private var fragment: AddEntryFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +40,15 @@ class AddEntryActivity : ActivityWithToolbar() {
         toolbar.setNavigationOnClickListener { onBackPressed() }
         toolbar.navigationIconResource = R.drawable.ic_arrow_back_light
 
-        entryType?.let {
-            supportFragmentManager.attachFragment(AddEntryFragment.newInstance(it),
-                    R.id.container)
+        fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as AddEntryFragment?
+
+        if (fragment == null) {
+
+            entryType?.let {
+                fragment = AddEntryFragment.newInstance(it)
+                supportFragmentManager.attachFragment(fragment!!,
+                        R.id.container, FRAGMENT_TAG)
+            }
         }
     }
 }

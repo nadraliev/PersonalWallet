@@ -12,11 +12,19 @@ class MainActivity : ActivityWithToolbar() {
     companion object {
         const val TAG = "MainActivity"
         fun getIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
+        const val FRAGMENT_TAG = "mainFragmentTag"
     }
+
+    private var mainFragment: MainFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportFragmentManager.attachFragment(MainFragment.newInstance(), R.id.container)
+        mainFragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as MainFragment?
+
+        if (mainFragment == null) {
+            mainFragment = MainFragment.newInstance()
+            supportFragmentManager.attachFragment(mainFragment!!, R.id.container, FRAGMENT_TAG)
+        }
     }
 }

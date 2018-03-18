@@ -1,14 +1,11 @@
 package soutvoid.com.personalwallet.ui.base
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import butterknife.ButterKnife
-
-import com.arellomobile.mvp.presenter.InjectPresenter
-
-import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.MvpAppCompatActivity
 import com.orhanobut.logger.Logger
+import com.tinsuke.icekick.extension.freezeInstanceState
+import com.tinsuke.icekick.extension.unfreezeInstanceState
 
 
 abstract class BaseActivity : MvpAppCompatActivity(), BaseView {
@@ -19,6 +16,7 @@ abstract class BaseActivity : MvpAppCompatActivity(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.d("onCreate")
+        unfreezeInstanceState(savedInstanceState)
         setContentView(getLayoutResId())
         ButterKnife.bind(this)
     }
@@ -39,4 +37,9 @@ abstract class BaseActivity : MvpAppCompatActivity(), BaseView {
     }
 
     protected abstract fun getLayoutResId(): Int
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        freezeInstanceState(outState)
+    }
 }
