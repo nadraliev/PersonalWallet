@@ -2,6 +2,7 @@ package soutvoid.com.personalwallet.ui.screen.addentry
 
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -14,6 +15,10 @@ import soutvoid.com.personalwallet.domain.transactionentry.Income
 import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
+import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
+import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
+import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
+import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
 import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
 import soutvoid.com.personalwallet.ui.util.delegates.argument
 import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
@@ -30,6 +35,15 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
 
     @InjectPresenter(type = PresenterType.GLOBAL)
     lateinit var mAddEntryPresenter: AddEntryPresenter
+
+    @BindView(R.id.add_entry_name_section)
+    lateinit var nameSection: InputNameSectionView
+    @BindView(R.id.add_entry_value_section)
+    lateinit var valueSection: InputValueSectionView
+    @BindView(R.id.add_entry_category_section)
+    lateinit var categorySection: ChooseCategorySectionView
+    @BindView(R.id.add_entry_date_section)
+    lateinit var dateSection: ChooseDateSectionView
 
     private val entryType by argument<EntryType>(ENTRY_TYPE)
 

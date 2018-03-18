@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
         style="@style/AddEntrySection"
         android:id="@+id/add_entry_name_section"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/add_entry_name_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/add_entry_name_hint" />
-        </android.support.design.widget.TextInputLayout>
-
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider0"
@@ -37,40 +21,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_entry_name_section" />
 
-    <android.support.constraint.ConstraintLayout
+    <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
         style="@style/AddEntrySection"
         android:id="@+id/add_entry_value_section"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider0">
-
-        <ImageView
-            android:id="@+id/add_entry_cash_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cash_multiple" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/add_entry_value_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/addentry_form_horizontal_spacing"
-            android:layout_marginLeft="@dimen/addentry_form_horizontal_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_entry_cash_icon"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/add_entry_value_hint" />
-        </android.support.design.widget.TextInputLayout>
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/divider0" />
 
     <View
         android:id="@+id/divider1"
@@ -81,37 +38,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_entry_value_section" />
 
-    <android.support.constraint.ConstraintLayout
+    <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
         style="@style/AddEntrySection"
         android:id="@+id/add_entry_category_section"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider1">
-
-        <ImageView
-            android:id="@+id/add_entry_tag_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_tag" />
-
-        <TextView
-            android:id="@+id/add_entry_category_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/addentry_form_horizontal_spacing"
-            android:layout_marginLeft="@dimen/addentry_form_horizontal_spacing"
-            android:gravity="left|start"
-            android:textAppearance="@style/AddEntryTextAppearance"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_entry_tag_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Food" />
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
     <View
         android:id="@+id/divider2"
@@ -122,45 +55,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_entry_category_section" />
 
-    <android.support.constraint.ConstraintLayout
+    <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
         style="@style/AddEntrySection"
         android:id="@+id/add_entry_date_section"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2">
-
-        <ImageView
-            android:id="@+id/add_entry_clock_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_clock" />
-
-        <TextView
-            android:id="@+id/add_entry_date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/addentry_form_horizontal_spacing"
-            android:layout_marginLeft="@dimen/addentry_form_horizontal_spacing"
-            android:textAppearance="@style/AddEntryTextAppearance"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/add_entry_clock_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mon, Mar 15, 2018" />
-
-        <TextView
-            android:id="@+id/add_entry_time_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/AddEntryTextAppearance"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15:08" />
-    </android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <View
         android:id="@+id/divider3"
