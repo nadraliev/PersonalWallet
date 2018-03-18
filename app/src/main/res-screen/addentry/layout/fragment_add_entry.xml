@@ -105,7 +105,6 @@
             android:layout_marginStart="@dimen/addentry_form_horizontal_spacing"
             android:layout_marginLeft="@dimen/addentry_form_horizontal_spacing"
             android:gravity="left|start"
-            android:text="shitshit"
             android:textAppearance="@style/AddEntryTextAppearance"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
