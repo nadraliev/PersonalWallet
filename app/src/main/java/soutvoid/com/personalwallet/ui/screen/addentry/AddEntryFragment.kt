@@ -38,7 +38,7 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
                 AddEntryFragment().withArguments(ENTRY_TYPE to entryType)
     }
 
-    @InjectPresenter(type = PresenterType.GLOBAL)
+    @InjectPresenter(type = PresenterType.WEAK)
     lateinit var mAddEntryPresenter: AddEntryPresenter
 
     @BindView(R.id.add_entry_name_section)
@@ -52,10 +52,10 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
 
     private val entryType by argument<EntryType>(ENTRY_TYPE)
 
-    @ProvidePresenterTag(presenterClass = AddEntryPresenter::class, type = PresenterType.GLOBAL)
+    @ProvidePresenterTag(presenterClass = AddEntryPresenter::class, type = PresenterType.WEAK)
     fun provideAddEntryPresenterTag(): String = entryType.toString()
 
-    @ProvidePresenter(type = PresenterType.GLOBAL)
+    @ProvidePresenter(type = PresenterType.WEAK)
     fun provideAddEntryPresenter(): AddEntryPresenter {
         entryType!!.let { return AddEntryPresenter(App.instance.kodein, it) }
     }
