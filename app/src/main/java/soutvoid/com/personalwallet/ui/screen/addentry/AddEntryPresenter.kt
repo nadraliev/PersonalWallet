@@ -6,6 +6,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.with
 import com.orhanobut.logger.Logger
 import io.realm.Realm
+import soutvoid.com.personalwallet.domain.transactionentry.Category
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
 import soutvoid.com.personalwallet.ui.base.BasePresenter
@@ -17,6 +18,8 @@ class AddEntryPresenter(kodein: Kodein,
 
     val realm: Realm by with(this).instance()
     val categoryRepository: ICategoryRepository by with(this).instance()
+    var categories: List<Category> = listOf()
+    var categoryToChoose: String? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -31,7 +34,22 @@ class AddEntryPresenter(kodein: Kodein,
     }
 
     private fun loadCategories() {
-        Logger.d(categoryRepository.getAll().blockingFirst())
+        val categoriesFlowable = categoryRepository.getAll().doOnNext {
+            Logger.d(it)
+            viewState?.setAvailableCategories(it)
+            categoryToChoose?.let {
+                viewState?.chooseCategory(it)
+                categoryToChoose = null
+            }
+        }
+        this subscribeTo categoriesFlowable
+    }
+
+    fun onNewCategoryEntered(name: CharSequence) {
+        if (categories.none { it.name == name }) {
+            categoryToChoose = name.toString()
+            categoryRepository.create(Category(name.toString()))
+        }
     }
 
     override fun onDestroy() {

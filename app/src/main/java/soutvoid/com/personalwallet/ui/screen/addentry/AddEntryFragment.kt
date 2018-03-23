@@ -1,7 +1,9 @@
 package soutvoid.com.personalwallet.ui.screen.addentry
 
 import android.os.Build
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.view.View
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
@@ -10,6 +12,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenterTag
 import org.jetbrains.anko.support.v4.withArguments
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.app.App
+import soutvoid.com.personalwallet.domain.transactionentry.Category
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.Income
 import soutvoid.com.personalwallet.domain.transactionentry.Outcome
@@ -55,6 +58,11 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
         entryType!!.let { return AddEntryPresenter(App.instance.kodein, it) }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
+    }
+
     override fun getLayoutResId(): Int = R.layout.fragment_add_entry
 
     override fun setToolbarColorForEntryType(entryType: EntryType) {
@@ -79,5 +87,17 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
             is Outcome -> R.string.add_entry_outcome_title
         }
         activity?.setTitle(stringResId)
+    }
+
+    override fun setAvailableCategories(categories: List<Category>) {
+        categorySection.categories = categories
+    }
+
+    override fun chooseCategory(name: String) {
+        categorySection.selectCategory(name)
+    }
+
+    private fun setListeners() {
+        categorySection.onNewCategoryInputListener = { mAddEntryPresenter.onNewCategoryEntered(it) }
     }
 }

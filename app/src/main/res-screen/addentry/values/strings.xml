@@ -4,4 +4,6 @@
     <string name="add_entry_outcome_title">Add outcome</string>
     <string name="add_entry_name_hint">Name</string>
     <string name="add_entry_value_hint">Value</string>
+    <string name="add_entry_add_category_option">Add category</string>
+    <string name="add_entry_new_category_hint">Enter category name</string>
 </resources>
