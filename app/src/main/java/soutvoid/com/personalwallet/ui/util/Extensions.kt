@@ -39,3 +39,5 @@ fun Long.getHumanReadableDateShort(context: Context): String {
         return dateFormat.format(Date(this))
     }
 }
+
+fun getCurrencySymbol(): String = "\u20BD"

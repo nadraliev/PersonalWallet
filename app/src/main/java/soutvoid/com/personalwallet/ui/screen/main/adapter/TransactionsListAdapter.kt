@@ -1,16 +1,22 @@
 package soutvoid.com.personalwallet.ui.screen.main.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.truizlop.sectionedrecyclerview.SimpleSectionedAdapter
+import org.jetbrains.anko.textColor
 import soutvoid.com.personalwallet.R
+import soutvoid.com.personalwallet.domain.transactionentry.Income
+import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
+import soutvoid.com.personalwallet.ui.util.getCurrencySymbol
 import soutvoid.com.personalwallet.ui.util.getHumanReadableDateShort
 
 /**
@@ -45,13 +51,40 @@ class TransactionsListAdapter(private val context: Context) : SimpleSectionedAda
 
         @BindView(R.id.item_transaction_name)
         lateinit var nameTv: TextView
+        @BindView(R.id.item_transaction_category)
+        lateinit var categoryTv: TextView
+        @BindView(R.id.item_transaction_value)
+        lateinit var valueTv: TextView
+        @BindView(R.id.item_transaction_type_icon)
+        lateinit var typeIcon: ImageView
+
+        private var incomeColor: Int
+        private var outcomeColor: Int
+        private var noCategoryMsg: String
 
         init {
             ButterKnife.bind(this, view)
+            incomeColor = ContextCompat.getColor(view.context, R.color.colorEntryIncome)
+            outcomeColor = ContextCompat.getColor(view.context, R.color.colorEntryOutcome)
+            noCategoryMsg = view.context.getString(R.string.main_transactions_list_no_category)
         }
 
         fun bind(transactionEntry: TransactionEntry) {
-            nameTv.text = transactionEntry.name
+            with(transactionEntry) {
+                nameTv.text = name
+                categoryTv.text = categoryId?.name ?: noCategoryMsg
+                valueTv.text = "$moneyValue ${getCurrencySymbol()}"
+                valueTv.textColor = when (getEntryType()) {
+                    is Income -> incomeColor
+                    is Outcome -> outcomeColor
+                    null -> outcomeColor
+                }
+                typeIcon.setImageResource(when (getEntryType()) {
+                    Income -> R.drawable.ic_income
+                    Outcome -> R.drawable.ic_outcome
+                    null -> R.drawable.ic_outcome
+                })
+            }
         }
 
     }

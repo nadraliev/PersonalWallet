@@ -1,16 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/main_transactions_list_item_height"
+    app:cardCornerRadius="0dp">
 
-    <TextView
-        android:id="@+id/item_transaction_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="84dp" />
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/item_transaction_type_icon"
+            android:layout_width="@dimen/icon_size_big"
+            android:layout_height="@dimen/icon_size_big"
+            android:layout_marginStart="@dimen/main_transactions_list_icon_margin"
+            android:layout_marginLeft="@dimen/main_transactions_list_icon_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_income" />
+
+        <LinearLayout
+            android:id="@+id/item_transaction_data_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding_horizontal"
+            android:layout_marginRight="@dimen/content_padding_horizontal"
+            android:layout_marginLeft="@dimen/main_transactions_list_icon_data_spacing"
+            android:layout_marginStart="@dimen/main_transactions_list_icon_data_spacing"
+            android:gravity="start|left"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_transaction_type_icon"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/item_transaction_category"
+                style="@style/TransactionsListCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Salary" />
+
+            <TextView
+                android:id="@+id/item_transaction_name"
+                style="@style/TransactionsListName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Months salary" />
+
+            <TextView
+                android:id="@+id/item_transaction_value"
+                style="@style/TransactionsListValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="9999999999P" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/item_transaction_divider"
+            style="@style/Divider"
+            android:layout_width="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

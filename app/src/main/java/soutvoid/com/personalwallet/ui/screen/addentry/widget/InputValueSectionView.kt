@@ -10,6 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.jakewharton.rxbinding2.widget.RxTextView
 import soutvoid.com.personalwallet.R
+import soutvoid.com.personalwallet.ui.util.getCurrencySymbol
 
 /**
  * Created by andrew on 18.03.18.
@@ -23,7 +24,7 @@ class InputValueSectionView : ConstraintLayout {
     @BindView(R.id.value_input)
     lateinit var valueInput: TextInputLayout
 
-    private val currencySymbol = " ₽"
+    private val currencySymbol = " ${getCurrencySymbol()}"
 
     var text: String
         get() = valueInput.editText?.text?.toString() ?: ""

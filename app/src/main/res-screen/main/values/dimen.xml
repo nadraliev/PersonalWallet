@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_transactions_list_item_height">88dp</dimen>
+    <dimen name="main_transactions_list_icon_margin">8dp</dimen>
+    <dimen name="main_transactions_list_icon_data_spacing">24dp</dimen>
+</resources>
