@@ -134,3 +134,4 @@ gradle-app.setting
 # Compiled class file
 
 /.idea/misc.xml
+/.idea/

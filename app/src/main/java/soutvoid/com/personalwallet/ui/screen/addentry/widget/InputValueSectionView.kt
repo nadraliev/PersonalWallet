@@ -23,7 +23,7 @@ class InputValueSectionView : ConstraintLayout {
     @BindView(R.id.value_input)
     lateinit var valueInput: TextInputLayout
 
-    private val currencySymbol = "₽"
+    private val currencySymbol = " ₽"
 
     var text: String
         get() = valueInput.editText?.text?.toString() ?: ""
@@ -35,7 +35,8 @@ class InputValueSectionView : ConstraintLayout {
         View.inflate(context, R.layout.view_input_value_section, this)
         ButterKnife.bind(this, rootView)
         valueInput.editText?.setText(currencySymbol)
-        Selection.setSelection(valueInput.editText?.text, valueInput.editText?.length()?.minus(1)
+        Selection.setSelection(valueInput.editText?.text, valueInput.editText
+                ?.length()?.minus(currencySymbol.length)
                 ?: 0)
 
         RxTextView.textChanges(valueInput.editText!!).doOnNext {
@@ -43,7 +44,8 @@ class InputValueSectionView : ConstraintLayout {
                 var text = it.toString()
                 text = text.replace(currencySymbol, "") + currencySymbol
                 valueInput.editText?.setText(text)
-                Selection.setSelection(valueInput.editText?.text, valueInput.editText?.length()?.minus(1)
+                Selection.setSelection(valueInput.editText?.text, valueInput.editText
+                        ?.length()?.minus(currencySymbol.length)
                         ?: 0)
             }
         }.subscribe()
