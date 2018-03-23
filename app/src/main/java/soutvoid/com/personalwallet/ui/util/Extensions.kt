@@ -36,7 +36,7 @@ fun Long.getHumanReadableDateShort(context: Context): String {
         return context.getString(R.string.common_yesterday)
     } else {
         val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
-        return dateFormat.format(Date(this))
+        return dateFormat.format(Date(this * 1000))
     }
 }
 

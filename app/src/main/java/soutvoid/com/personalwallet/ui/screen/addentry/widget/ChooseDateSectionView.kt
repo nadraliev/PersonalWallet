@@ -3,6 +3,7 @@ package soutvoid.com.personalwallet.ui.screen.addentry.widget
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.os.Parcelable
 import android.support.constraint.ConstraintLayout
 import android.text.format.DateFormat
 import android.util.AttributeSet
@@ -11,6 +12,9 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.tinsuke.icekick.extension.freezeInstanceState
+import com.tinsuke.icekick.extension.serialState
+import com.tinsuke.icekick.extension.unfreezeInstanceState
 import soutvoid.com.personalwallet.R
 import java.text.DateFormat.SHORT
 import java.text.SimpleDateFormat
@@ -30,7 +34,7 @@ class ChooseDateSectionView : ConstraintLayout {
     @BindView(R.id.add_entry_time_tv)
     lateinit var timeTv: TextView
 
-    val calendar = Calendar.getInstance()
+    var calendar: Calendar by serialState(Calendar.getInstance())
 
     init {
         View.inflate(context, R.layout.view_choose_date_section, this)
@@ -84,4 +88,11 @@ class ChooseDateSectionView : ConstraintLayout {
         timeTv.text = timeFormat.format(Date(millis))
     }
 
+    override fun onSaveInstanceState(): Parcelable? =
+            freezeInstanceState(super.onSaveInstanceState())
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        super.onRestoreInstanceState(unfreezeInstanceState(state))
+        updateDateAndTime(calendar.timeInMillis)
+    }
 }

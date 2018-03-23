@@ -1,6 +1,7 @@
 package soutvoid.com.personalwallet.ui.screen.addentry.widget
 
 import android.content.Context
+import android.os.Parcelable
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
@@ -9,6 +10,9 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.afollestad.materialdialogs.MaterialDialog
+import com.tinsuke.icekick.extension.freezeInstanceState
+import com.tinsuke.icekick.extension.serialState
+import com.tinsuke.icekick.extension.unfreezeInstanceState
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.domain.transactionentry.Category
 
@@ -32,7 +36,7 @@ class ChooseCategorySectionView : ConstraintLayout {
             maybeUpdateDefaultCategory()
         }
 
-    var currentCategory: Category? = null
+    var currentCategory: Category? by serialState()
 
     init {
         View.inflate(context, R.layout.view_choose_category_section, this)
@@ -53,6 +57,8 @@ class ChooseCategorySectionView : ConstraintLayout {
     private fun maybeUpdateDefaultCategory() {
         if (currentCategory == null && categories.isNotEmpty()) {
             selectCategory(0)
+        } else {
+            currentCategory?.let { categoryTv.text = it.name }
         }
     }
 
@@ -87,4 +93,10 @@ class ChooseCategorySectionView : ConstraintLayout {
                 }.show()
     }
 
+    override fun onSaveInstanceState(): Parcelable? =
+            freezeInstanceState(super.onSaveInstanceState())
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        super.onRestoreInstanceState(unfreezeInstanceState(state))
+    }
 }
