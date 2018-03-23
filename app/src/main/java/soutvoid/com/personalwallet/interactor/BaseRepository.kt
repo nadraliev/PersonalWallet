@@ -22,14 +22,14 @@ open class BaseRepository<VALUE : RealmObject>(internal val dbHelper: Realm,
             dbHelper.where(clazz).equalTo(ID_KEY, id).findFirst()?.asFlowable()
 
     override fun create(value: VALUE) {
-        dbHelper.executeTransactionAsync {
+        dbHelper.executeTransaction {
             val lastId = AtomicLong(it.where(clazz).max(ID_KEY) as Long? ?: -1)
             it.copyToRealm(value.apply { trySetId(lastId.incrementAndGet()) })
         }
     }
 
     override fun update(value: VALUE) {
-        dbHelper.executeTransactionAsync {
+        dbHelper.executeTransaction {
             it.copyToRealmOrUpdate(value)
         }
     }

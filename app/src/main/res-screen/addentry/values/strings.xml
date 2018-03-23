@@ -6,4 +6,7 @@
     <string name="add_entry_value_hint">Value</string>
     <string name="add_entry_add_category_option">Add category</string>
     <string name="add_entry_new_category_hint">Enter category name</string>
+    <string name="add_entry_blank_name_error">Name cannot be blank</string>
+    <string name="add_entry_invalid_value_error">Invalid value</string>
+    <string name="add_entry_choose_category">Choose category</string>
 </resources>

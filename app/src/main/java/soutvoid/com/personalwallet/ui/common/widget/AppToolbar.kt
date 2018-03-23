@@ -11,6 +11,10 @@ import android.util.AttributeSet
  */
 class AppToolbar : Toolbar {
 
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
     @ColorRes
     var textColor: Int = 0
         set(value) {
@@ -18,10 +22,6 @@ class AppToolbar : Toolbar {
             setSubtitleTextColor(color)
             setTitleTextColor(color)
         }
-
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     init {
 

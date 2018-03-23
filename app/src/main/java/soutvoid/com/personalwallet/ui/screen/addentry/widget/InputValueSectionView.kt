@@ -31,6 +31,12 @@ class InputValueSectionView : ConstraintLayout {
             valueInput.editText?.setText(value)
         }
 
+    var valueText: String
+        get() = text.substringBefore(currencySymbol)
+        set(value) {
+            text = value + currencySymbol
+        }
+
     init {
         View.inflate(context, R.layout.view_input_value_section, this)
         ButterKnife.bind(this, rootView)

@@ -18,6 +18,8 @@ import soutvoid.com.personalwallet.domain.transactionentry.Income
 import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
+import soutvoid.com.personalwallet.ui.common.Saveable
+import soutvoid.com.personalwallet.ui.screen.addentry.data.NewEntryData
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
@@ -28,7 +30,7 @@ import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
 import soutvoid.com.personalwallet.ui.util.getColorResId
 import soutvoid.com.personalwallet.ui.util.getDarkColorResId
 
-class AddEntryFragment : BaseFragment(), AddEntryView {
+class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     companion object {
         const val TAG = "AddEntryFragment"
 
@@ -96,6 +98,29 @@ class AddEntryFragment : BaseFragment(), AddEntryView {
     override fun chooseCategory(name: String) {
         categorySection.selectCategory(name)
     }
+
+    override fun save() {
+        mAddEntryPresenter.onSaveClicker(gatherData())
+    }
+
+    override fun finish() {
+        activity?.finish()
+    }
+
+    override fun showBlankNameError(show: Boolean) {
+        nameSection.nameInput.error = context?.getString(R.string.add_entry_blank_name_error)
+        nameSection.nameInput.isErrorEnabled = show
+    }
+
+    override fun showInvalidValueError(show: Boolean) {
+        valueSection.valueInput.error = context?.getString(R.string.add_entry_invalid_value_error)
+        valueSection.valueInput.isErrorEnabled = show
+    }
+
+    private fun gatherData(): NewEntryData =
+            NewEntryData(nameSection.text, categorySection.currentCategory,
+                    dateSection.calendar.timeInMillis, valueSection.valueText)
+
 
     private fun setListeners() {
         categorySection.onNewCategoryInputListener = { mAddEntryPresenter.onNewCategoryEntered(it) }

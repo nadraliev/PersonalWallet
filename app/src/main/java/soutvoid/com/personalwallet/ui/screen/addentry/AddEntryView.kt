@@ -16,4 +16,10 @@ interface AddEntryView : BaseView {
 
     fun chooseCategory(name: String)
 
+    fun finish()
+
+    fun showBlankNameError(show: Boolean)
+
+    fun showInvalidValueError(show: Boolean)
+
 }

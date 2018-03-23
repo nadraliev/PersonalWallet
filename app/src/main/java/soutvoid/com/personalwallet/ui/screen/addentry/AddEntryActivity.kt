@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import org.jetbrains.anko.appcompat.v7.navigationIconResource
 import org.jetbrains.anko.intentFor
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
+import soutvoid.com.personalwallet.ui.common.Saveable
 import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
 import soutvoid.com.personalwallet.ui.util.attachFragment
 import soutvoid.com.personalwallet.ui.util.delegates.extra
@@ -49,6 +52,22 @@ class AddEntryActivity : ActivityWithToolbar() {
                 supportFragmentManager.attachFragment(fragment!!,
                         R.id.container, FRAGMENT_TAG)
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = menuInflater
+        menuInflater.inflate(R.menu.ok_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_item_ok -> {
+                (fragment as? Saveable?)?.save()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

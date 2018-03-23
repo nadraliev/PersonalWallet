@@ -9,6 +9,7 @@ import java.io.Serializable
  * Created by andrew on 16.03.18.
  */
 open class TransactionEntry(private var entryTypeName: String = "income",
+                            var name: String = "",
                             var categoryId: Category? = null,
                             var creationDate: Long = System.currentTimeMillis() / 1000,
                             var moneyValue: Long = 0,

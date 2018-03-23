@@ -20,6 +20,7 @@
         android:layout_marginLeft="@dimen/addentry_form_horizontal_spacing"
         android:gravity="left|start"
         android:textAppearance="@style/AddEntryTextAppearance"
+        android:text="@string/add_entry_choose_category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/add_entry_tag_icon"

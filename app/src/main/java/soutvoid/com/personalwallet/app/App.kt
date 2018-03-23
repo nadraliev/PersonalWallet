@@ -13,6 +13,8 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import soutvoid.com.personalwallet.interactor.transactionentry.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.TransactionEntryRepository
 import soutvoid.com.personalwallet.ui.util.PresenterScope
 
 
@@ -63,5 +65,6 @@ class App : Application(), KodeinAware {
 
         bind<Realm>() with scopedSingleton(PresenterScope) { Realm.getDefaultInstance() }
         bind<ICategoryRepository>() with scopedSingleton(PresenterScope) { CategoryRepository(with(it).instance()) }
+        bind<ITransactionEntryRepository>() with scopedSingleton(PresenterScope) { TransactionEntryRepository(with(it).instance()) }
     }
 }
