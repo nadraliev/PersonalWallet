@@ -118,7 +118,7 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     }
 
     private fun gatherData(): NewEntryData =
-            NewEntryData(nameSection.text, categorySection.currentCategory,
+            NewEntryData(nameSection.text, categorySection.categories[categorySection.currentCategoryIndex],
                     dateSection.calendar.timeInMillis, valueSection.valueText)
 
 

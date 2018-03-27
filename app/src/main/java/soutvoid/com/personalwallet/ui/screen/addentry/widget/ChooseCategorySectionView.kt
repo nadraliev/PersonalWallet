@@ -36,7 +36,7 @@ class ChooseCategorySectionView : ConstraintLayout {
             maybeUpdateDefaultCategory()
         }
 
-    var currentCategory: Category? by serialState()
+    var currentCategoryIndex: Int by serialState(-1)
 
     init {
         View.inflate(context, R.layout.view_choose_category_section, this)
@@ -44,8 +44,9 @@ class ChooseCategorySectionView : ConstraintLayout {
     }
 
     fun selectCategory(position: Int) {
-        currentCategory = categories[position]
-        categoryTv.text = currentCategory?.name
+        currentCategoryIndex = position
+        if (currentCategoryIndex != -1)
+            categoryTv.text = categories[currentCategoryIndex].name
     }
 
     fun selectCategory(name: String) {
@@ -55,10 +56,11 @@ class ChooseCategorySectionView : ConstraintLayout {
     }
 
     private fun maybeUpdateDefaultCategory() {
-        if (currentCategory == null && categories.isNotEmpty()) {
+        if (currentCategoryIndex == -1 && categories.isNotEmpty()) {
             selectCategory(0)
         } else {
-            currentCategory?.let { categoryTv.text = it.name }
+            if (currentCategoryIndex != -1)
+                categoryTv.text = categories[currentCategoryIndex].name
         }
     }
 

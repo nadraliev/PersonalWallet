@@ -33,6 +33,8 @@ class MainFragment : BaseFragment(), MainView {
     lateinit var addEntryFab: FloatingActionButton
     @BindView(R.id.main_transactions_list)
     lateinit var transactionsList: RecyclerView
+    @BindView(R.id.main_sections_list)
+    lateinit var sectionsList: RecyclerView
 
     private lateinit var transactionsListAdapter: TransactionsListAdapter
 
@@ -49,6 +51,7 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     private fun initTransactionsList(view: View) {
+        transactionsList.isNestedScrollingEnabled = false
         transactionsList.layoutManager = LinearLayoutManager(context)
         transactionsListAdapter = TransactionsListAdapter(view.context)
         transactionsList.adapter = transactionsListAdapter
