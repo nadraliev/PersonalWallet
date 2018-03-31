@@ -16,7 +16,9 @@ import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.screen.addentry.AddEntryActivity
 import soutvoid.com.personalwallet.ui.screen.main.adapter.AddEntrySpeedDialAdapter
+import soutvoid.com.personalwallet.ui.screen.main.adapter.SectionsListAdapter
 import soutvoid.com.personalwallet.ui.screen.main.adapter.TransactionsListAdapter
+import soutvoid.com.personalwallet.ui.screen.main.data.SectionData
 import uk.co.markormesher.android_fab.FloatingActionButton
 
 class MainFragment : BaseFragment(), MainView {
@@ -37,6 +39,7 @@ class MainFragment : BaseFragment(), MainView {
     lateinit var sectionsList: RecyclerView
 
     private lateinit var transactionsListAdapter: TransactionsListAdapter
+    private lateinit var sectionsListAdapter: SectionsListAdapter
 
     @ProvidePresenter(type = PresenterType.WEAK)
     fun providePresenter(): MainPresenter =
@@ -48,6 +51,7 @@ class MainFragment : BaseFragment(), MainView {
         super.onViewCreated(view, savedInstanceState)
         initFabSpeedDial(view.context)
         initTransactionsList(view)
+        initSectionsList()
     }
 
     private fun initTransactionsList(view: View) {
@@ -61,6 +65,12 @@ class MainFragment : BaseFragment(), MainView {
         addEntryFab.speedDialMenuAdapter = AddEntrySpeedDialAdapter(context) { entryType ->
             mMainPresenter.onAddEntry(entryType)
         }
+    }
+
+    private fun initSectionsList() {
+        sectionsListAdapter = SectionsListAdapter(SectionData.getAllValues())
+        sectionsList.adapter = sectionsListAdapter
+        sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun openAddEntry(entryType: EntryType) {

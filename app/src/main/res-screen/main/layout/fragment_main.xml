@@ -13,12 +13,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/main_sections_list_top_padding">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_sections_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/main_sections_list_horizontal_padding"
+                android:paddingRight="@dimen/main_sections_list_horizontal_padding"
+                android:clipToPadding="false"
+                android:overScrollMode="never" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_transactions_list"

@@ -3,7 +3,6 @@ package soutvoid.com.personalwallet.ui.screen.main.adapter
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,6 +17,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.ui.util.getCurrencySymbol
 import soutvoid.com.personalwallet.ui.util.getHumanReadableDateShort
+import soutvoid.com.personalwallet.ui.util.inflate
 
 /**
  * Created by andrew on 23.03.18.
@@ -33,7 +33,7 @@ class TransactionsListAdapter(private val context: Context) : SimpleSectionedAda
             transactions.size
 
     override fun onCreateItemViewHolder(parent: ViewGroup?, viewType: Int): TransactionViewHolder? {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_transaction_main, parent, false)
+        val view = parent?.inflate(R.layout.item_transaction_main)
         return view?.let {
             TransactionViewHolder(it)
         }

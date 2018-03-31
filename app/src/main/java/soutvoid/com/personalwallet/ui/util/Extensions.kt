@@ -2,8 +2,12 @@ package soutvoid.com.personalwallet.ui.util
 
 import android.content.Context
 import android.os.Build
+import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import soutvoid.com.personalwallet.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,3 +45,6 @@ fun Long.getHumanReadableDateShort(context: Context): String {
 }
 
 fun getCurrencySymbol(): String = "\u20BD"
+
+fun ViewGroup.inflate(@LayoutRes resource: Int): View =
+        LayoutInflater.from(context).inflate(resource, this, false)
