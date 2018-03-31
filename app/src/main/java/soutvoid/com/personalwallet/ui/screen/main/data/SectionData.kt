@@ -7,12 +7,9 @@ import soutvoid.com.personalwallet.R
 /**
  * Created by andrew on 31.03.18.
  */
-sealed class SectionData {
-    companion object {
-        fun getAllValues() =
-                listOf<SectionData>(SectionCategories())
-    }
+enum class SectionData(@DrawableRes val iconResId: Int,
+                       @StringRes val nameResId: Int) {
+    CATEGORIES(R.drawable.ic_tag_multiple_grey, R.string.main_section_categories_name),
+    REPORTS(R.drawable.ic_chart_arc_grey, R.string.main_section_reports_name),
+    LIMIT(R.drawable.ic_alert_grey, R.string.main_section_limit_name)
 }
-
-data class SectionCategories(@DrawableRes val iconResId: Int = R.drawable.ic_tag_multiple_grey600_48dp,
-                             @StringRes val nameResId: Int = R.string.main_section_categories_name) : SectionData()

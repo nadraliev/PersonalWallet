@@ -68,7 +68,7 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     private fun initSectionsList() {
-        sectionsListAdapter = SectionsListAdapter(SectionData.getAllValues())
+        sectionsListAdapter = SectionsListAdapter(SectionData.values().asList())
         sectionsList.adapter = sectionsListAdapter
         sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }

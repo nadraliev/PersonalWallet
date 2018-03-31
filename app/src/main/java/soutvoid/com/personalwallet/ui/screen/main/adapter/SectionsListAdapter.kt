@@ -3,9 +3,10 @@ package soutvoid.com.personalwallet.ui.screen.main.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.robertlevonyan.views.chip.Chip
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.ui.screen.main.data.SectionData
 import soutvoid.com.personalwallet.ui.util.inflate
@@ -29,15 +30,18 @@ class SectionsListAdapter(private var sections: List<SectionData> = listOf())
 
     class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        @BindView(R.id.main_section_chip)
-        lateinit var chip: Chip
+        @BindView(R.id.item_section_icon)
+        lateinit var iconIv: ImageView
+        @BindView(R.id.item_section_label)
+        lateinit var labelTv: TextView
 
         init {
             ButterKnife.bind(this, view)
         }
 
         fun bind(sectionData: SectionData) {
-
+            labelTv.setText(sectionData.nameResId)
+            iconIv.setImageResource(sectionData.iconResId)
         }
 
     }

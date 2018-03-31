@@ -2,9 +2,11 @@ package soutvoid.com.personalwallet.ui.util
 
 import android.content.Context
 import android.os.Build
+import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,3 +50,6 @@ fun getCurrencySymbol(): String = "\u20BD"
 
 fun ViewGroup.inflate(@LayoutRes resource: Int): View =
         LayoutInflater.from(context).inflate(resource, this, false)
+
+fun Context.getDrawableById(@DrawableRes id: Int) =
+        ContextCompat.getDrawable(this, id)
