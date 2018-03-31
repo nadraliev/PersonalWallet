@@ -100,7 +100,7 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     }
 
     override fun save() {
-        mAddEntryPresenter.onSaveClicker(gatherData())
+        mAddEntryPresenter.onSaveClicked(gatherData())
     }
 
     override fun finish() {

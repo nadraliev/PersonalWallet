@@ -56,7 +56,7 @@ class AddEntryPresenter(kodein: Kodein,
         }
     }
 
-    fun onSaveClicker(data: NewEntryData) {
+    fun onSaveClicked(data: NewEntryData) {
         if (validate(data)) {
             val transactionEntry = TransactionEntry(entryType.getName(),
                     data.name, data.category, data.dateAndTimeMillis / 1000,
