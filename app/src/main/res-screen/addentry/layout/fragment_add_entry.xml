@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
-        style="@style/AddEntrySection"
-        android:id="@+id/add_entry_name_section"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/divider0"
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_entry_name_section" />
+        <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
+            android:id="@+id/add_entry_name_section"
+            style="@style/AddEntrySection"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
-        style="@style/AddEntrySection"
-        android:id="@+id/add_entry_value_section"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider0" />
+        <View
+            android:id="@+id/divider0"
+            style="@style/Divider"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_entry_name_section" />
 
-    <View
-        android:id="@+id/divider1"
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_entry_value_section" />
+        <soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
+            android:id="@+id/add_entry_value_section"
+            style="@style/AddEntrySection"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider0" />
 
-    <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
-        style="@style/AddEntrySection"
-        android:id="@+id/add_entry_category_section"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+        <View
+            android:id="@+id/divider1"
+            style="@style/Divider"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_entry_value_section" />
 
-    <View
-        android:id="@+id/divider2"
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_entry_category_section" />
+        <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
+            android:id="@+id/add_entry_category_section"
+            style="@style/AddEntrySection"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
-    <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
-        style="@style/AddEntrySection"
-        android:id="@+id/add_entry_date_section"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        <View
+            android:id="@+id/divider2"
+            style="@style/Divider"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_entry_category_section" />
 
-    <View
-        android:id="@+id/divider3"
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_entry_date_section" />
+        <soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
+            android:id="@+id/add_entry_date_section"
+            style="@style/AddEntrySection"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-</android.support.constraint.ConstraintLayout>
+        <View
+            android:id="@+id/divider3"
+            style="@style/Divider"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/addentry_form_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_entry_date_section" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
