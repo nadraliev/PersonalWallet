@@ -9,12 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.truizlop.sectionedrecyclerview.SimpleSectionedAdapter
 import org.jetbrains.anko.textColor
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.domain.transactionentry.Income
 import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
+import soutvoid.com.personalwallet.ui.common.recycler.SimpleSectionedAdapter
 import soutvoid.com.personalwallet.ui.util.getCurrencySymbol
 import soutvoid.com.personalwallet.ui.util.getHumanReadableDateShort
 import soutvoid.com.personalwallet.ui.util.inflate
@@ -22,7 +22,9 @@ import soutvoid.com.personalwallet.ui.util.inflate
 /**
  * Created by andrew on 23.03.18.
  */
-class TransactionsListAdapter(private val context: Context) : SimpleSectionedAdapter<TransactionsListAdapter.TransactionViewHolder>() {
+class TransactionsListAdapter(private val context: Context,
+                              var onItemClickListener: ((Int, Int) -> Unit)? = null)
+    : SimpleSectionedAdapter<TransactionsListAdapter.TransactionViewHolder>() {
 
     var transactions: List<Pair<Long, List<TransactionEntry>>> = listOf()
 
@@ -42,12 +44,12 @@ class TransactionsListAdapter(private val context: Context) : SimpleSectionedAda
     override fun getItemCountForSection(section: Int): Int =
             transactions[section].second.size
 
-
     override fun onBindItemViewHolder(holder: TransactionViewHolder?, section: Int, position: Int) {
         holder?.bind(transactions[section].second[position])
     }
 
-    class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class TransactionViewHolder(view: View)
+        : RecyclerView.ViewHolder(view) {
 
         @BindView(R.id.item_transaction_name)
         lateinit var nameTv: TextView
@@ -67,12 +69,15 @@ class TransactionsListAdapter(private val context: Context) : SimpleSectionedAda
             incomeColor = ContextCompat.getColor(view.context, R.color.colorEntryIncome)
             outcomeColor = ContextCompat.getColor(view.context, R.color.colorEntryOutcome)
             noCategoryMsg = view.context.getString(R.string.main_transactions_list_no_category)
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(sectionForPosition[adapterPosition], positionWithinSection[adapterPosition])
+            }
         }
 
         fun bind(transactionEntry: TransactionEntry) {
             with(transactionEntry) {
                 nameTv.text = name
-                categoryTv.text = categoryId?.name ?: noCategoryMsg
+                categoryTv.text = category?.name ?: noCategoryMsg
                 valueTv.text = "$moneyValue ${getCurrencySymbol()}"
                 valueTv.textColor = when (getEntryType()) {
                     is Income -> incomeColor

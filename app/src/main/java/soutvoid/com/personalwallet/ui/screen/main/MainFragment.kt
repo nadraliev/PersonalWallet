@@ -57,7 +57,9 @@ class MainFragment : BaseFragment(), MainView {
     private fun initTransactionsList(view: View) {
         transactionsList.isNestedScrollingEnabled = false
         transactionsList.layoutManager = LinearLayoutManager(context)
-        transactionsListAdapter = TransactionsListAdapter(view.context)
+        transactionsListAdapter = TransactionsListAdapter(view.context) { section, posInSection ->
+            mMainPresenter.onEntryClicked(section, posInSection)
+        }
         transactionsList.adapter = transactionsListAdapter
     }
 
@@ -73,9 +75,9 @@ class MainFragment : BaseFragment(), MainView {
         sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    override fun openAddEntry(entryType: EntryType) {
+    override fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry?) {
         context?.let {
-            startActivity(AddEntryActivity.getIntent(it, entryType))
+            startActivity(AddEntryActivity.getIntent(it, entryType, transactionEntry?.id))
         }
     }
 

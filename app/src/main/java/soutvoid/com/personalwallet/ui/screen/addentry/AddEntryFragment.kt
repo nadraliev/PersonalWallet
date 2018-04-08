@@ -24,18 +24,16 @@ import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySecti
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
-import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
+import soutvoid.com.personalwallet.ui.util.*
 import soutvoid.com.personalwallet.ui.util.delegates.argument
-import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
-import soutvoid.com.personalwallet.ui.util.getColorResId
-import soutvoid.com.personalwallet.ui.util.getDarkColorResId
 
 class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     companion object {
         const val TAG = "AddEntryFragment"
 
-        fun newInstance(entryType: EntryType): AddEntryFragment =
-                AddEntryFragment().withArguments(ENTRY_TYPE to entryType)
+        fun newInstance(entryType: EntryType, dataId: Long? = null): AddEntryFragment =
+                AddEntryFragment().withArguments(ENTRY_TYPE to entryType,
+                        TRANSACTION_ENTRY_ID to dataId)
     }
 
     @InjectPresenter(type = PresenterType.WEAK)
@@ -51,13 +49,14 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     lateinit var dateSection: ChooseDateSectionView
 
     private val entryType by argument<EntryType>(ENTRY_TYPE)
+    private val transactionEntry by argument<Long>(TRANSACTION_ENTRY_ID)
 
     @ProvidePresenterTag(presenterClass = AddEntryPresenter::class, type = PresenterType.WEAK)
     fun provideAddEntryPresenterTag(): String = entryType.toString()
 
     @ProvidePresenter(type = PresenterType.WEAK)
     fun provideAddEntryPresenter(): AddEntryPresenter {
-        entryType!!.let { return AddEntryPresenter(App.instance.kodein, it) }
+        entryType!!.let { return AddEntryPresenter(App.instance.kodein, it, transactionEntry) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,8 +116,24 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
         valueSection.valueInput.isErrorEnabled = show
     }
 
+    override fun setName(name: String) {
+        nameSection.text = name
+    }
+
+    override fun setCategoryName(categoryName: String) {
+        categorySection.currentCategoryName = categoryName
+    }
+
+    override fun setDate(date: Long) {
+        dateSection.setDateAndTime(date)
+    }
+
+    override fun setValue(value: Long) {
+        valueSection.valueText = value.toString()
+    }
+
     private fun gatherData(): NewEntryData =
-            NewEntryData(nameSection.text, categorySection.categories[categorySection.currentCategoryIndex],
+            NewEntryData(nameSection.text, categorySection.currentCategoryName,
                     dateSection.calendar.timeInMillis, valueSection.valueText)
 
 

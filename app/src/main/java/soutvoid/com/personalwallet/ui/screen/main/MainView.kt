@@ -9,7 +9,7 @@ import soutvoid.com.personalwallet.ui.base.BaseView
 interface MainView : BaseView {
 
     @StateStrategyType(value = SkipStrategy::class)
-    fun openAddEntry(entryType: EntryType)
+    fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry? = null)
 
     fun showTransactions(transactions: List<Pair<Long, List<TransactionEntry>>>)
 }

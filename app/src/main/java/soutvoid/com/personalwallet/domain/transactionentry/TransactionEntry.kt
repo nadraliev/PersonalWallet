@@ -10,13 +10,13 @@ import java.io.Serializable
  */
 open class TransactionEntry(private var entryTypeName: String = "income",
                             var name: String = "",
-                            var categoryId: Category? = null,
+                            var category: Category? = null,
                             var creationDateSeconds: Long = System.currentTimeMillis() / 1000,
                             var moneyValue: Long = 0,
                             var comment: String = "",
                             @PrimaryKey override var id: Long = 0) : RealmObject(), Serializable, IBaseEntity {
 
-    fun getEntryType() = EntryType.getByName(entryTypeName)
+    fun getEntryType() = EntryType.getByName(entryTypeName)!!
 
     fun setEntryType(value: EntryType) {
         entryTypeName = value.getName()

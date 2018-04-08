@@ -16,7 +16,8 @@ import soutvoid.com.personalwallet.ui.screen.addentry.data.NewEntryData
 
 @InjectViewState
 class AddEntryPresenter(kodein: Kodein,
-                        private val entryType: EntryType)
+                        private val entryType: EntryType,
+                        private val transactionEntryId: Long? = null)
     : BasePresenter<AddEntryView>(kodein) {
 
     val realm: Realm by with(this).instance()
@@ -24,12 +25,22 @@ class AddEntryPresenter(kodein: Kodein,
     val transactionEntryRepository: ITransactionEntryRepository by with(this).instance()
     var categories: List<Category> = listOf()
     var categoryToChoose: String? = null
+    var transactionEntry: TransactionEntry? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState?.setToolbarColorForEntryType(entryType)
         viewState?.setStatusBarColorForEntryType(entryType)
         viewState?.setTitleForEntryType(entryType)
+        transactionEntryId?.let {
+            transactionEntry = transactionEntryRepository.getById(transactionEntryId)?.blockingFirst()
+        }
+        transactionEntry?.also {
+            viewState?.setName(it.name)
+            viewState?.setCategoryName(it.category?.name ?: "")
+            viewState?.setDate(it.creationDateSeconds)
+            viewState?.setValue(it.moneyValue)
+        }
     }
 
     override fun attachView(view: AddEntryView?) {
@@ -40,6 +51,7 @@ class AddEntryPresenter(kodein: Kodein,
     private fun loadCategories() {
         val categoriesFlowable = categoryRepository.getAll().doOnNext {
             Logger.d(it)
+            categories = it
             viewState?.setAvailableCategories(it)
             categoryToChoose?.let {
                 viewState?.chooseCategory(it)
@@ -50,7 +62,7 @@ class AddEntryPresenter(kodein: Kodein,
     }
 
     fun onNewCategoryEntered(name: CharSequence) {
-        if (categories.none { it.name == name }) {
+        if (categories.none { it.name == name.toString() }) {
             categoryToChoose = name.toString()
             categoryRepository.create(Category(name.toString()))
         }
@@ -58,10 +70,18 @@ class AddEntryPresenter(kodein: Kodein,
 
     fun onSaveClicked(data: NewEntryData) {
         if (validate(data)) {
-            val transactionEntry = TransactionEntry(entryType.getName(),
-                    data.name, data.category, data.dateAndTimeMillis / 1000,
+            val category = categories.first { it.name == data.categoryName }
+            val newTransactionEntry = TransactionEntry(entryType.getName(),
+                    data.name, category, data.dateAndTimeMillis / 1000,
                     data.moneyValue.toLong(), "")
-            transactionEntryRepository.create(transactionEntry)
+            if (transactionEntry == null) {
+                transactionEntryRepository.create(newTransactionEntry)
+            } else {
+                transactionEntry?.let {
+                    newTransactionEntry.id = it.id
+                    transactionEntryRepository.update(newTransactionEntry)
+                }
+            }
             viewState?.finish()
         }
     }

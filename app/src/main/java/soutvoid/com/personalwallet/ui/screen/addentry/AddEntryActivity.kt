@@ -14,6 +14,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
 import soutvoid.com.personalwallet.ui.common.Saveable
 import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
+import soutvoid.com.personalwallet.ui.util.TRANSACTION_ENTRY_ID
 import soutvoid.com.personalwallet.ui.util.attachFragment
 import soutvoid.com.personalwallet.ui.util.delegates.extra
 import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
@@ -23,13 +24,15 @@ import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
  */
 class AddEntryActivity : ActivityWithToolbar() {
     companion object {
-        fun getIntent(context: Context, entryType: EntryType): Intent =
-                context.intentFor<AddEntryActivity>(ENTRY_TYPE to entryType)
+        fun getIntent(context: Context, entryType: EntryType, dataId: Long? = null): Intent =
+                context.intentFor<AddEntryActivity>(ENTRY_TYPE to entryType,
+                        TRANSACTION_ENTRY_ID to dataId)
 
         const val FRAGMENT_TAG = "addEntryFragmentTag"
     }
 
     private val entryType by extra<EntryType>(ENTRY_TYPE)
+    private val transactionEntry by extra<Long>(TRANSACTION_ENTRY_ID)
     private var fragment: AddEntryFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +51,7 @@ class AddEntryActivity : ActivityWithToolbar() {
         if (fragment == null) {
 
             entryType?.let {
-                fragment = AddEntryFragment.newInstance(it)
+                fragment = AddEntryFragment.newInstance(it, transactionEntry)
                 supportFragmentManager.attachFragment(fragment!!,
                         R.id.container, FRAGMENT_TAG)
             }

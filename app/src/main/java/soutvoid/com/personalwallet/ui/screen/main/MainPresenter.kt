@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class MainPresenter(kodein: Kodein) : BasePresenter<MainView>(kodein) {
 
     private val transactionRepository: ITransactionEntryRepository by with(this).instance()
-    private var transactions: List<Pair<Long, List<TransactionEntry>>> = listOf()   //entries grouped and ordered by day
+    private var groupedTransactions: List<Pair<Long, List<TransactionEntry>>> = listOf()   //entries grouped and ordered by day
 
     override fun attachView(view: MainView?) {
         super.attachView(view)
@@ -25,15 +25,21 @@ class MainPresenter(kodein: Kodein) : BasePresenter<MainView>(kodein) {
     private fun loadTransactions() {
         val getAllFlowable = transactionRepository.getAll()
                 .doOnNext {
-                    transactions = it.groupBy { it.creationDateSeconds floorTo TimeUnit.DAYS.toSeconds(1) }
+                    groupedTransactions = it.groupBy { it.creationDateSeconds floorTo TimeUnit.DAYS.toSeconds(1) }
                             .map { Pair(it.key, it.value) }.sortedByDescending { it.first }
-                    viewState?.showTransactions(transactions)
+                    viewState?.showTransactions(groupedTransactions)
                 }
         this subscribeTo getAllFlowable
     }
 
     fun onAddEntry(entryType: EntryType) {
         viewState?.openAddEntry(entryType)
+    }
+
+    fun onEntryClicked(section: Int, posInSection: Int) {
+        with(groupedTransactions[section].second[posInSection]) {
+            viewState?.openAddEntry(getEntryType(), this)
+        }
     }
 
 }

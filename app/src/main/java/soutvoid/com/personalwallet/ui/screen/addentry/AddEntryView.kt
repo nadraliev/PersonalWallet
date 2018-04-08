@@ -22,4 +22,12 @@ interface AddEntryView : BaseView {
 
     fun showInvalidValueError(show: Boolean)
 
+    fun setName(name: String)
+
+    fun setCategoryName(categoryName: String)
+
+    fun setDate(date: Long)
+
+    fun setValue(value: Long)
+
 }

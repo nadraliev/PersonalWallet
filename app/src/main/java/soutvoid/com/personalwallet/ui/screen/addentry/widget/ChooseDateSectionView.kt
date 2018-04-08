@@ -52,6 +52,11 @@ class ChooseDateSectionView : ConstraintLayout {
         showTimePicker()
     }
 
+    fun setDateAndTime(seconds: Long) {
+        calendar.timeInMillis = seconds * 1000
+        updateDateAndTime(calendar.timeInMillis)
+    }
+
     private fun showDatePicker() {
         DatePickerDialog(rootView.context, onDateSetListener,
                 calendar.get(Calendar.YEAR),
