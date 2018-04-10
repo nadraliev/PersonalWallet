@@ -19,6 +19,8 @@
         </activity>
 
         <activity android:name=".ui.screen.addentry.AddEntryActivity" />
+
+        <activity android:name=".ui.screen.categories.CategoriesActivity" />
     </application>
 
 </manifest>

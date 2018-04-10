@@ -8,6 +8,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.interactor.transactionentry.ITransactionEntryRepository
 import soutvoid.com.personalwallet.ui.base.BasePresenter
+import soutvoid.com.personalwallet.ui.screen.main.data.SectionData
 import soutvoid.com.personalwallet.util.floorTo
 import java.util.concurrent.TimeUnit
 
@@ -39,6 +40,14 @@ class MainPresenter(kodein: Kodein) : BasePresenter<MainView>(kodein) {
     fun onEntryClicked(section: Int, posInSection: Int) {
         with(groupedTransactions[section].second[posInSection]) {
             viewState?.openAddEntry(getEntryType(), this)
+        }
+    }
+
+    fun onSectionClicked(section: SectionData) {
+        when (section) {
+            SectionData.CATEGORIES -> viewState?.openCategories()
+            SectionData.REPORTS -> viewState?.openReports()
+            SectionData.LIMIT -> viewState?.openLimits()
         }
     }
 

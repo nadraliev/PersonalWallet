@@ -5,3 +5,5 @@ package soutvoid.com.personalwallet.util
  */
 infix fun Long.floorTo(base: Long): Long =
         (Math.floor(this / base.toDouble()) * base).toLong()
+
+infix fun List<*>.hasNoIndex(index: Int): Boolean = size <= index

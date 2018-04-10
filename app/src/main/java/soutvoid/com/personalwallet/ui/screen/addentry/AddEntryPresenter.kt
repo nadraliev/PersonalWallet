@@ -64,7 +64,9 @@ class AddEntryPresenter(kodein: Kodein,
     fun onNewCategoryEntered(name: CharSequence) {
         if (categories.none { it.name == name.toString() }) {
             categoryToChoose = name.toString()
-            categoryRepository.create(Category(name.toString()))
+            realm.executeTransaction {
+                categoryRepository.create(Category(name.toString()))
+            }
         }
     }
 
@@ -75,11 +77,15 @@ class AddEntryPresenter(kodein: Kodein,
                     data.name, category, data.dateAndTimeMillis / 1000,
                     data.moneyValue.toLong(), "")
             if (transactionEntry == null) {
-                transactionEntryRepository.create(newTransactionEntry)
+                realm.executeTransaction {
+                    transactionEntryRepository.create(newTransactionEntry)
+                }
             } else {
-                transactionEntry?.let {
-                    newTransactionEntry.id = it.id
-                    transactionEntryRepository.update(newTransactionEntry)
+                transactionEntry?.let { transactionEntry ->
+                    realm.executeTransaction {
+                        newTransactionEntry.id = transactionEntry.id
+                        transactionEntryRepository.update(newTransactionEntry)
+                    }
                 }
             }
             viewState?.finish()

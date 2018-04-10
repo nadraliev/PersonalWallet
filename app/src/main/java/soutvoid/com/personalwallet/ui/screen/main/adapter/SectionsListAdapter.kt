@@ -14,7 +14,8 @@ import soutvoid.com.personalwallet.ui.util.inflate
 /**
  * Created by andrew on 31.03.18.
  */
-class SectionsListAdapter(private var sections: List<SectionData> = listOf())
+class SectionsListAdapter(var sections: List<SectionData> = listOf(),
+                          var onItemClick: ((Int, View) -> Unit)? = null)
     : RecyclerView.Adapter<SectionsListAdapter.SectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder {
@@ -28,7 +29,7 @@ class SectionsListAdapter(private var sections: List<SectionData> = listOf())
         holder.bind(sections[position])
     }
 
-    class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         @BindView(R.id.item_section_icon)
         lateinit var iconIv: ImageView
@@ -37,6 +38,7 @@ class SectionsListAdapter(private var sections: List<SectionData> = listOf())
 
         init {
             ButterKnife.bind(this, view)
+            itemView.setOnClickListener { onItemClick?.invoke(adapterPosition, it) }
         }
 
         fun bind(sectionData: SectionData) {

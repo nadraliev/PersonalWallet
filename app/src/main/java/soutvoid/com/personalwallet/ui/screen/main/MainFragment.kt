@@ -15,6 +15,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.screen.addentry.AddEntryActivity
+import soutvoid.com.personalwallet.ui.screen.categories.CategoriesActivity
 import soutvoid.com.personalwallet.ui.screen.main.adapter.AddEntrySpeedDialAdapter
 import soutvoid.com.personalwallet.ui.screen.main.adapter.SectionsListAdapter
 import soutvoid.com.personalwallet.ui.screen.main.adapter.TransactionsListAdapter
@@ -70,7 +71,9 @@ class MainFragment : BaseFragment(), MainView {
     }
 
     private fun initSectionsList() {
-        sectionsListAdapter = SectionsListAdapter(SectionData.values().asList())
+        sectionsListAdapter = SectionsListAdapter(SectionData.values().asList()) { pos, _ ->
+            mMainPresenter.onSectionClicked(sectionsListAdapter.sections[pos])
+        }
         sectionsList.adapter = sectionsListAdapter
         sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
@@ -84,5 +87,19 @@ class MainFragment : BaseFragment(), MainView {
     override fun showTransactions(transactions: List<Pair<Long, List<TransactionEntry>>>) {
         transactionsListAdapter.transactions = transactions
         transactionsListAdapter.notifyDataSetChanged()
+    }
+
+    override fun openCategories() {
+        context?.let {
+            it.startActivity(CategoriesActivity.getIntent(it))
+        }
+    }
+
+    override fun openReports() {
+
+    }
+
+    override fun openLimits() {
+
     }
 }

@@ -11,5 +11,14 @@ interface MainView : BaseView {
     @StateStrategyType(value = SkipStrategy::class)
     fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry? = null)
 
+    @StateStrategyType(value = SkipStrategy::class)
+    fun openCategories()
+
+    @StateStrategyType(value = SkipStrategy::class)
+    fun openReports()
+
+    @StateStrategyType(value = SkipStrategy::class)
+    fun openLimits()
+
     fun showTransactions(transactions: List<Pair<Long, List<TransactionEntry>>>)
 }

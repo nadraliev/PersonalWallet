@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Categories</string>
+    <string name="categories_edit_name_dialog_title">Edit name</string>
+    <string name="categories_edit_name_dialog_hint">Enter new name</string>
+    <string name="categories_new_category_dialog_title">New category</string>
+    <string name="categories_new_category_dialog_name_hint">Enter name</string>
+</resources>
