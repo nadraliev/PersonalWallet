@@ -4,7 +4,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.KodeinInjected
 import com.github.salomonbrys.kodein.KodeinInjector
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,21 +19,21 @@ abstract class BasePresenter<T : BaseView>(kodein: Kodein? = null)
         kodein?.let { inject(it) }
     }
 
-    infix fun BasePresenter<*>.subscribeTo(flowable: Flowable<*>) {
-        compositeDisposable.add(flowable.subscribe())
+    infix fun BasePresenter<*>.subscribeTo(observable: Observable<*>) {
+        compositeDisposable.add(observable.subscribe())
     }
 
-    infix fun subscribeInBackgroundTo(flowable: Flowable<*>) {
-        compositeDisposable.add(flowable.subscribeOn(Schedulers.io())
+    infix fun subscribeInBackgroundTo(observable: Observable<*>) {
+        compositeDisposable.add(observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe())
     }
 
-    infix fun subscribeWithoutFreezingTo(flowable: Flowable<*>) {
-        flowable.subscribe()
+    infix fun subscribeWithoutFreezingTo(observable: Observable<*>) {
+        observable.subscribe()
     }
 
-    infix fun subscribeWithoutFreezingInBackgroundTo(flowable: Flowable<*>) {
-        flowable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+    infix fun subscribeWithoutFreezingInBackgroundTo(observable: Observable<*>) {
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
     override fun onDestroy() {

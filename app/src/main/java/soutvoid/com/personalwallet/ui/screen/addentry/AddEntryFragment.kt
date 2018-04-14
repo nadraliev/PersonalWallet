@@ -24,8 +24,12 @@ import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySecti
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
-import soutvoid.com.personalwallet.ui.util.*
 import soutvoid.com.personalwallet.ui.util.delegates.argument
+import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
+import soutvoid.com.personalwallet.ui.util.getColorResId
+import soutvoid.com.personalwallet.ui.util.getDarkColorResId
+import soutvoid.com.personalwallet.util.ENTRY_TYPE
+import soutvoid.com.personalwallet.util.TRANSACTION_ENTRY_ID
 
 class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     companion object {

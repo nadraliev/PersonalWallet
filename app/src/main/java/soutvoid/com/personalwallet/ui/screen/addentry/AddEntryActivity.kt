@@ -13,11 +13,11 @@ import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
 import soutvoid.com.personalwallet.ui.common.Saveable
-import soutvoid.com.personalwallet.ui.util.ENTRY_TYPE
-import soutvoid.com.personalwallet.ui.util.TRANSACTION_ENTRY_ID
 import soutvoid.com.personalwallet.ui.util.attachFragment
 import soutvoid.com.personalwallet.ui.util.delegates.extra
 import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
+import soutvoid.com.personalwallet.util.ENTRY_TYPE
+import soutvoid.com.personalwallet.util.TRANSACTION_ENTRY_ID
 
 /**
  * Created by andrew on 16.03.18.

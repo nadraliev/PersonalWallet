@@ -3,20 +3,17 @@ package soutvoid.com.personalwallet.ui.screen.categories
 import com.arellomobile.mvp.InjectViewState
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.with
-import io.realm.Realm
 import soutvoid.com.personalwallet.domain.transactionentry.Category
-import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
-import soutvoid.com.personalwallet.interactor.transactionentry.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
 import soutvoid.com.personalwallet.ui.base.BasePresenter
 import soutvoid.com.personalwallet.util.hasNoIndex
 
 @InjectViewState
 class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein) {
 
-    private val realm: Realm by with(this).instance()
-    private val categoriesRepository: ICategoryRepository by with(this).instance()
-    private val transactionEntryRepository: ITransactionEntryRepository by with(this).instance()
+    private val categoriesRepository: ICategoryRepository by instance()
+    private val transactionEntryRepository: ITransactionEntryRepository by instance()
 
     private var categories = mutableListOf<Category>()
 
@@ -26,27 +23,25 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
     }
 
     private fun loadCategories() {
-        val categoriesFlowable = categoriesRepository.getAll().take(1).doOnNext {
+        val categoriesObservable = categoriesRepository.getAll().take(1).doOnNext {
             categories = it.toMutableList()
             viewState?.showCategories(categories)
         }
-        this subscribeTo categoriesFlowable
+        this subscribeTo categoriesObservable
     }
 
     fun onCategoryDelete(position: Int) {
         if (categories hasNoIndex position) return
         val categoryToDelete = categories[position]
-        val deleteCategoryFlowable = transactionEntryRepository.getAll().take(1).doOnNext { transactions ->
-            realm.executeTransaction {
-                transactions.filter { it.category?.id == categoryToDelete.id }.forEach {
-                    transactionEntryRepository.delete(it.id)
-                }
-                categoriesRepository.delete(categoryToDelete.id)
-                categories.removeAt(position)
+        val deleteCategoryObservable = transactionEntryRepository.getAll().take(1).doOnNext { transactions ->
+            transactions.filter { it.category?.id == categoryToDelete.id }.forEach {
+                transactionEntryRepository.delete(it.id)
             }
+            this subscribeTo categoriesRepository.delete(categoryToDelete.id)
+            categories.removeAt(position)
             viewState?.removeCategory(position)
         }
-        this subscribeTo deleteCategoryFlowable
+        this subscribeTo deleteCategoryObservable
     }
 
     fun onCategoryEdit(position: Int) {
@@ -59,10 +54,8 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
     }
 
     private fun doChangeCategoryName(category: Category, newName: String) {
-        realm.executeTransaction {
-            category.name = newName
-            categoriesRepository.update(category)
-        }
+        category.name = newName
+        this subscribeTo categoriesRepository.update(category)
     }
 
     fun onAddCategory() {
@@ -74,15 +67,8 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
 
     private fun doAddCategory(name: String): Category {
         val newCategory = Category(name)
-        realm.executeTransaction {
-            categoriesRepository.create(newCategory)
-        }
+        this subscribeTo categoriesRepository.create(newCategory)
         categories.add(newCategory)
         return newCategory
-    }
-
-    override fun onDestroy() {
-        realm.close()
-        super.onDestroy()
     }
 }

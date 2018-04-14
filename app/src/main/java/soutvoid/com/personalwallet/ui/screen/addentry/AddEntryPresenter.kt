@@ -3,14 +3,12 @@ package soutvoid.com.personalwallet.ui.screen.addentry
 import com.arellomobile.mvp.InjectViewState
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.with
 import com.orhanobut.logger.Logger
-import io.realm.Realm
 import soutvoid.com.personalwallet.domain.transactionentry.Category
 import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
-import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
-import soutvoid.com.personalwallet.interactor.transactionentry.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
 import soutvoid.com.personalwallet.ui.base.BasePresenter
 import soutvoid.com.personalwallet.ui.screen.addentry.data.NewEntryData
 
@@ -20,9 +18,8 @@ class AddEntryPresenter(kodein: Kodein,
                         private val transactionEntryId: Long? = null)
     : BasePresenter<AddEntryView>(kodein) {
 
-    val realm: Realm by with(this).instance()
-    val categoryRepository: ICategoryRepository by with(this).instance()
-    val transactionEntryRepository: ITransactionEntryRepository by with(this).instance()
+    val categoryRepository: ICategoryRepository by instance()
+    val transactionEntryRepository: ITransactionEntryRepository by instance()
     var categories: List<Category> = listOf()
     var categoryToChoose: String? = null
     var transactionEntry: TransactionEntry? = null
@@ -33,7 +30,7 @@ class AddEntryPresenter(kodein: Kodein,
         viewState?.setStatusBarColorForEntryType(entryType)
         viewState?.setTitleForEntryType(entryType)
         transactionEntryId?.let {
-            transactionEntry = transactionEntryRepository.getById(transactionEntryId)?.blockingFirst()
+            transactionEntry = transactionEntryRepository.getById(transactionEntryId).blockingFirst()
         }
         transactionEntry?.also {
             viewState?.setName(it.name)
@@ -49,24 +46,23 @@ class AddEntryPresenter(kodein: Kodein,
     }
 
     private fun loadCategories() {
-        val categoriesFlowable = categoryRepository.getAll().doOnNext {
+        val categoriesObservable = categoryRepository.getAll().doOnNext {
             Logger.d(it)
-            categories = it
-            viewState?.setAvailableCategories(it)
+            categories = it.toList()
+            viewState?.setAvailableCategories(it.toList())
             categoryToChoose?.let {
                 viewState?.chooseCategory(it)
                 categoryToChoose = null
             }
         }
-        this subscribeTo categoriesFlowable
+        this subscribeTo categoriesObservable
     }
 
     fun onNewCategoryEntered(name: CharSequence) {
         if (categories.none { it.name == name.toString() }) {
             categoryToChoose = name.toString()
-            realm.executeTransaction {
-                categoryRepository.create(Category(name.toString()))
-            }
+            this subscribeTo categoryRepository.create(Category(name.toString()))
+            loadCategories()
         }
     }
 
@@ -77,15 +73,11 @@ class AddEntryPresenter(kodein: Kodein,
                     data.name, category, data.dateAndTimeMillis / 1000,
                     data.moneyValue.toLong(), "")
             if (transactionEntry == null) {
-                realm.executeTransaction {
-                    transactionEntryRepository.create(newTransactionEntry)
-                }
+                this subscribeTo transactionEntryRepository.create(newTransactionEntry)
             } else {
                 transactionEntry?.let { transactionEntry ->
-                    realm.executeTransaction {
-                        newTransactionEntry.id = transactionEntry.id
-                        transactionEntryRepository.update(newTransactionEntry)
-                    }
+                    newTransactionEntry.id = transactionEntry.id
+                    this subscribeTo transactionEntryRepository.update(newTransactionEntry)
                 }
             }
             viewState?.finish()
@@ -99,10 +91,5 @@ class AddEntryPresenter(kodein: Kodein,
         val valueValid = moneyValue != null && moneyValue >= 0
         viewState?.showInvalidValueError(!valueValid)
         return nameValid and valueValid
-    }
-
-    override fun onDestroy() {
-        realm.close()
-        super.onDestroy()
     }
 }

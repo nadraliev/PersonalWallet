@@ -3,19 +3,28 @@ package soutvoid.com.personalwallet.app
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.birbit.android.jobqueue.JobManager
+import com.birbit.android.jobqueue.config.Configuration
 import com.facebook.stetho.Stetho
 import com.github.salomonbrys.kodein.*
 import com.github.salomonbrys.kodein.android.autoAndroidModule
+import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import soutvoid.com.personalwallet.interactor.transactionentry.CategoryRepository
-import soutvoid.com.personalwallet.interactor.transactionentry.ICategoryRepository
-import soutvoid.com.personalwallet.interactor.transactionentry.ITransactionEntryRepository
-import soutvoid.com.personalwallet.interactor.transactionentry.TransactionEntryRepository
-import soutvoid.com.personalwallet.ui.util.PresenterScope
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import soutvoid.com.personalwallet.interactor.HttpLogger
+import soutvoid.com.personalwallet.interactor.transactionentry.local.CategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.local.TransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.server.CategoryApi
+import soutvoid.com.personalwallet.util.BASE_URL
 
 
 /**
@@ -63,8 +72,19 @@ class App : Application(), KodeinAware {
     override val kodein by Kodein.lazy {
         import(autoAndroidModule(this@App))
 
-        bind<Realm>() with scopedSingleton(PresenterScope) { Realm.getDefaultInstance() }
-        bind<ICategoryRepository>() with scopedSingleton(PresenterScope) { CategoryRepository(with(it).instance()) }
-        bind<ITransactionEntryRepository>() with scopedSingleton(PresenterScope) { TransactionEntryRepository(with(it).instance()) }
+        bind<ICategoryRepository>() with singleton { CategoryRepository() }
+        bind<ITransactionEntryRepository>() with singleton { TransactionEntryRepository() }
+        bind<JobManager>() with singleton { JobManager(Configuration.Builder(this@App).build()) }
+        bind<OkHttpClient>() with singleton {
+            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor(HttpLogger())).build()
+        }
+        bind<Retrofit>() with singleton {
+            Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(instance())
+                    .addConverterFactory(GsonConverterFactory.create(Gson()))
+                    .build()
+        }
+        bind<CategoryApi>() with singleton { instance<Retrofit>().create(CategoryApi::class.java) }
     }
 }
