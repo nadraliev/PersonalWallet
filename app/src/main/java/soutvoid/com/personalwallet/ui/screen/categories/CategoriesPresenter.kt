@@ -1,11 +1,13 @@
 package soutvoid.com.personalwallet.ui.screen.categories
 
 import com.arellomobile.mvp.InjectViewState
+import com.birbit.android.jobqueue.JobManager
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import soutvoid.com.personalwallet.domain.transactionentry.Category
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.server.AddCategoryJob
 import soutvoid.com.personalwallet.ui.base.BasePresenter
 import soutvoid.com.personalwallet.util.hasNoIndex
 
@@ -14,12 +16,14 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
 
     private val categoriesRepository: ICategoryRepository by instance()
     private val transactionEntryRepository: ITransactionEntryRepository by instance()
+    private val jobManager: JobManager by instance()
 
     private var categories = mutableListOf<Category>()
 
     override fun attachView(view: CategoriesView?) {
         super.attachView(view)
         loadCategories()
+        jobManager.addJobInBackground(AddCategoryJob(Category(name = "name")))
     }
 
     private fun loadCategories() {
@@ -34,10 +38,10 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
         if (categories hasNoIndex position) return
         val categoryToDelete = categories[position]
         val deleteCategoryObservable = transactionEntryRepository.getAll().take(1).doOnNext { transactions ->
-            transactions.filter { it.category?.id == categoryToDelete.id }.forEach {
-                transactionEntryRepository.delete(it.id)
+            transactions.filter { it.category?.localId == categoryToDelete.localId }.forEach {
+                transactionEntryRepository.delete(it.localId)
             }
-            this subscribeTo categoriesRepository.delete(categoryToDelete.id)
+            this subscribeTo categoriesRepository.delete(categoryToDelete.localId)
             categories.removeAt(position)
             viewState?.removeCategory(position)
         }

@@ -17,8 +17,8 @@ import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import soutvoid.com.personalwallet.interactor.HttpLogger
 import soutvoid.com.personalwallet.interactor.transactionentry.local.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
@@ -76,12 +76,13 @@ class App : Application(), KodeinAware {
         bind<ITransactionEntryRepository>() with singleton { TransactionEntryRepository() }
         bind<JobManager>() with singleton { JobManager(Configuration.Builder(this@App).build()) }
         bind<OkHttpClient>() with singleton {
-            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor(HttpLogger())).build()
+            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()
         }
         bind<Retrofit>() with singleton {
             Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(instance())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(Gson()))
                     .build()
         }

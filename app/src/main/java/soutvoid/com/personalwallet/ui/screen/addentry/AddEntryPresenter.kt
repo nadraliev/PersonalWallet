@@ -76,7 +76,7 @@ class AddEntryPresenter(kodein: Kodein,
                 this subscribeTo transactionEntryRepository.create(newTransactionEntry)
             } else {
                 transactionEntry?.let { transactionEntry ->
-                    newTransactionEntry.id = transactionEntry.id
+                    newTransactionEntry.localId = transactionEntry.localId
                     this subscribeTo transactionEntryRepository.update(newTransactionEntry)
                 }
             }

@@ -80,7 +80,7 @@ class MainFragment : BaseFragment(), MainView {
 
     override fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry?) {
         context?.let {
-            startActivity(AddEntryActivity.getIntent(it, entryType, transactionEntry?.id))
+            startActivity(AddEntryActivity.getIntent(it, entryType, transactionEntry?.localId))
         }
     }
 

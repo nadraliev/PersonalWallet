@@ -5,7 +5,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.Category
 import soutvoid.com.personalwallet.interactor.BaseServerJob
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 
-class AddCategoryJob(category: Category) : BaseServerJob(0) {
+class AddCategoryJob(val category: Category) : BaseServerJob(0) {
 
     private val categoryApi: CategoryApi
         get() = kodein.instance()
@@ -13,7 +13,7 @@ class AddCategoryJob(category: Category) : BaseServerJob(0) {
         get() = kodein.instance()
 
     override fun onRun() {
-
+        categoryApi.addCategory(category).blockingFirst()
     }
 
     override fun onAdded() {

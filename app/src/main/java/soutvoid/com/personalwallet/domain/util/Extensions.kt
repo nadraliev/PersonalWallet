@@ -8,6 +8,6 @@ import soutvoid.com.personalwallet.domain.IBaseEntity
  */
 fun RealmObject.trySetId(id: Long) {
     if (this is IBaseEntity) {
-        this.id = id
+        this.localId = id
     }
 }
