@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.main.data
+package soutvoid.com.personalwallet.ui.screen.history.data
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes

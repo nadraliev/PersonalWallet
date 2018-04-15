@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.main
+package soutvoid.com.personalwallet.ui.screen.history
 
 import android.content.Context
 import android.os.Bundle
@@ -16,21 +16,21 @@ import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.screen.addentry.AddEntryActivity
 import soutvoid.com.personalwallet.ui.screen.categories.CategoriesActivity
-import soutvoid.com.personalwallet.ui.screen.main.adapter.AddEntrySpeedDialAdapter
-import soutvoid.com.personalwallet.ui.screen.main.adapter.SectionsListAdapter
-import soutvoid.com.personalwallet.ui.screen.main.adapter.TransactionsListAdapter
-import soutvoid.com.personalwallet.ui.screen.main.data.SectionData
+import soutvoid.com.personalwallet.ui.screen.history.adapter.AddEntrySpeedDialAdapter
+import soutvoid.com.personalwallet.ui.screen.history.adapter.SectionsListAdapter
+import soutvoid.com.personalwallet.ui.screen.history.adapter.TransactionsListAdapter
+import soutvoid.com.personalwallet.ui.screen.history.data.SectionData
 import uk.co.markormesher.android_fab.FloatingActionButton
 
-class MainFragment : BaseFragment(), MainView {
+class HistoryFragment : BaseFragment(), HistoryView {
     companion object {
-        const val TAG = "MainFragment"
+        const val TAG = "HistoryFragment"
 
-        fun newInstance(): MainFragment = MainFragment()
+        fun newInstance(): HistoryFragment = HistoryFragment()
     }
 
     @InjectPresenter(type = PresenterType.WEAK)
-    lateinit var mMainPresenter: MainPresenter
+    lateinit var mHistoryPresenter: HistoryPresenter
 
     @BindView(R.id.main_add_entry_fab)
     lateinit var addEntryFab: FloatingActionButton
@@ -43,8 +43,8 @@ class MainFragment : BaseFragment(), MainView {
     private lateinit var sectionsListAdapter: SectionsListAdapter
 
     @ProvidePresenter(type = PresenterType.WEAK)
-    fun providePresenter(): MainPresenter =
-            MainPresenter(App.instance.kodein)
+    fun providePresenter(): HistoryPresenter =
+            HistoryPresenter(App.instance.kodein)
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
@@ -59,20 +59,20 @@ class MainFragment : BaseFragment(), MainView {
         transactionsList.isNestedScrollingEnabled = false
         transactionsList.layoutManager = LinearLayoutManager(context)
         transactionsListAdapter = TransactionsListAdapter(view.context) { section, posInSection ->
-            mMainPresenter.onEntryClicked(section, posInSection)
+            mHistoryPresenter.onEntryClicked(section, posInSection)
         }
         transactionsList.adapter = transactionsListAdapter
     }
 
     private fun initFabSpeedDial(context: Context) {
         addEntryFab.speedDialMenuAdapter = AddEntrySpeedDialAdapter(context) { entryType ->
-            mMainPresenter.onAddEntry(entryType)
+            mHistoryPresenter.onAddEntry(entryType)
         }
     }
 
     private fun initSectionsList() {
         sectionsListAdapter = SectionsListAdapter(SectionData.values().asList()) { pos, _ ->
-            mMainPresenter.onSectionClicked(sectionsListAdapter.sections[pos])
+            mHistoryPresenter.onSectionClicked(sectionsListAdapter.sections[pos])
         }
         sectionsList.adapter = sectionsListAdapter
         sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -102,4 +102,6 @@ class MainFragment : BaseFragment(), MainView {
     override fun openLimits() {
 
     }
+
+
 }

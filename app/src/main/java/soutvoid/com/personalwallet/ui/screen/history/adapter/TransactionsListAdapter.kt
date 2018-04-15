@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.main.adapter
+package soutvoid.com.personalwallet.ui.screen.history.adapter
 
 import android.content.Context
 import android.support.v4.content.ContextCompat

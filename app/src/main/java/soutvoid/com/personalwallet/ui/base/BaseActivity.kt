@@ -8,7 +8,7 @@ import com.tinsuke.icekick.extension.freezeInstanceState
 import com.tinsuke.icekick.extension.unfreezeInstanceState
 
 
-abstract class BaseActivity : MvpAppCompatActivity(), BaseView {
+abstract class BaseActivity : MvpAppCompatActivity() {
     companion object {
         const val TAG = "BaseActivity"
     }

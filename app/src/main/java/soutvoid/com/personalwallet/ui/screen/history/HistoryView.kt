@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.main
+package soutvoid.com.personalwallet.ui.screen.history
 
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
@@ -6,7 +6,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.ui.base.BaseView
 
-interface MainView : BaseView {
+interface HistoryView : BaseView {
 
     @StateStrategyType(value = SkipStrategy::class)
     fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry? = null)

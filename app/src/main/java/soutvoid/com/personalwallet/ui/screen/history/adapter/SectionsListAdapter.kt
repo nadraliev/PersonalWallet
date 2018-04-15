@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.main.adapter
+package soutvoid.com.personalwallet.ui.screen.history.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import soutvoid.com.personalwallet.R
-import soutvoid.com.personalwallet.ui.screen.main.data.SectionData
+import soutvoid.com.personalwallet.ui.screen.history.data.SectionData
 import soutvoid.com.personalwallet.ui.util.inflate
 
 /**
