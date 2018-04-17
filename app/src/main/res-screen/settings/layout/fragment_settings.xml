@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/settings_sync_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Switch
+            android:id="@+id/settings_sync_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="?selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <soutvoid.com.personalwallet.ui.common.widget.TextSubtextView
+            android:id="@+id/settings_sync_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingBottom="@dimen/content_padding_vertical"
+            android:paddingLeft="@dimen/content_padding_horizontal"
+            android:paddingRight="@dimen/content_padding_horizontal"
+            android:paddingTop="@dimen/content_padding_vertical"
+            app:layout_constraintEnd_toStartOf="@+id/settings_sync_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:mainText="@string/settings_sync_label"
+            app:subtext="@string/settings_sync_hint">
+
+        </soutvoid.com.personalwallet.ui.common.widget.TextSubtextView>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        style="@style/Divider"
+        android:layout_width="match_parent" />
+
+</LinearLayout>

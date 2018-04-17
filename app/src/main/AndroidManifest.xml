@@ -23,6 +23,8 @@
         <activity android:name=".ui.screen.addentry.AddEntryActivity" />
 
         <activity android:name=".ui.screen.categories.CategoriesActivity" />
+
+        <activity android:name=".ui.screen.login.LoginActivity" />
     </application>
 
 </manifest>

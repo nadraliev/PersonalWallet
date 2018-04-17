@@ -24,6 +24,7 @@ import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRe
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.TransactionEntryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.server.CategoryApi
+import soutvoid.com.personalwallet.ui.util.SharedPreferencesWrapper
 import soutvoid.com.personalwallet.util.BASE_URL
 
 
@@ -87,5 +88,6 @@ class App : Application(), KodeinAware {
                     .build()
         }
         bind<CategoryApi>() with singleton { instance<Retrofit>().create(CategoryApi::class.java) }
+        bind<SharedPreferencesWrapper>() with singleton { SharedPreferencesWrapper(this@App) }
     }
 }
