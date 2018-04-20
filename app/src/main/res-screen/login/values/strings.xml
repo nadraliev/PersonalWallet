@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_title">Authorization</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_or">or</string>
+    <string name="login_login_text">login</string>
+    <string name="login_register_text">register</string>
+    <string name="login_login_or_password_is_incorrect_error">Login or password is incorrect</string>
+    <string name="login_email_is_invalid_error">Email is invalid</string>
+    <string name="login_password_is_invalid_error">Password is invalid</string>
+    <string name="login_password_too_small_error">Password must contain at least 8 symbols</string>
+</resources>

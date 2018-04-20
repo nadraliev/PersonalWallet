@@ -53,3 +53,9 @@ fun ViewGroup.inflate(@LayoutRes resource: Int): View =
 
 fun Context.getDrawableById(@DrawableRes id: Int) =
         ContextCompat.getDrawable(this, id)
+
+fun View.setBlocked(blocked: Boolean) {
+    isEnabled = !blocked
+    isClickable = !blocked
+    alpha = if (blocked) 0.5f else 1f
+}

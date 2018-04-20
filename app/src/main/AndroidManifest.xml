@@ -24,7 +24,9 @@
 
         <activity android:name=".ui.screen.categories.CategoriesActivity" />
 
-        <activity android:name=".ui.screen.login.LoginActivity" />
+        <activity
+            android:name=".ui.screen.login.LoginActivity"
+            android:theme="@style/LoginScreenTheme" />
     </application>
 
 </manifest>

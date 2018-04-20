@@ -32,4 +32,18 @@
         <item name="android:textColor">@color/md_grey_600</item>
     </style>
 
+    <style name="IconNormal">
+        <item name="android:layout_width">@dimen/icon_size_normal</item>
+        <item name="android:layout_height">@dimen/icon_size_normal</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="ErrorText" parent="PrimaryText">
+        <item name="android:textColor">@color/md_red_800</item>
+    </style>
+
+    <style name="TitleText" parent="PrimaryText">
+        <item name="android:textSize">22sp</item>
+    </style>
+
 </resources>
