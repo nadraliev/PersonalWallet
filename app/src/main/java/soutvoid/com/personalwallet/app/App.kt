@@ -29,6 +29,7 @@ import soutvoid.com.personalwallet.interactor.transactionentry.local.Transaction
 import soutvoid.com.personalwallet.interactor.transactionentry.server.CategoryApi
 import soutvoid.com.personalwallet.ui.util.SharedPreferencesWrapper
 import soutvoid.com.personalwallet.util.BASE_URL
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -80,7 +81,8 @@ class App : Application(), KodeinAware {
         bind<ITransactionEntryRepository>() with singleton { TransactionEntryRepository() }
         bind<JobManager>() with singleton { JobManager(Configuration.Builder(this@App).build()) }
         bind<OkHttpClient>() with singleton {
-            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor()).build()
+            OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+                    .addInterceptor(HttpLoggingInterceptor()).build()
         }
         bind<Retrofit>() with singleton {
             Retrofit.Builder()

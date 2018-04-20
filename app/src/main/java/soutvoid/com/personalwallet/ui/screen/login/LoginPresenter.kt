@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.orhanobut.logger.Logger
+import io.reactivex.Observable
 import retrofit2.HttpException
 import soutvoid.com.personalwallet.domain.user.User
 import soutvoid.com.personalwallet.interactor.authorization.local.IAuthorizationRepository
@@ -62,6 +63,10 @@ class LoginPresenter(kodein: Kodein) : BasePresenter<LoginView>(kodein) {
     private fun doLogin(email: String, password: String) {
         val userDto = User(email = email, password = password).toDto()
         val loginObservable = authorizationApi.login(userDto)
+                .flatMap {
+                    authorizationRepository.deleteAll()
+                    Observable.just(it)
+                }
                 .flatMap { authorizationRepository.create(it.toEntity()) }
 
         loginObservable.subscribeAsyncTo(
