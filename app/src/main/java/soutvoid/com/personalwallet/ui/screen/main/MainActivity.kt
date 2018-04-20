@@ -81,7 +81,9 @@ class MainActivity : ActivityWithToolbar() {
                 transaction.hide(value)
                 value.view?.isClickable = false
             }
-            transaction.commit()
+            transaction.runOnCommit {
+                (it as? IToolbarAdapter)?.adaptToolbar(toolbar)
+            }.commit()
             currentItem = type
         }
     }

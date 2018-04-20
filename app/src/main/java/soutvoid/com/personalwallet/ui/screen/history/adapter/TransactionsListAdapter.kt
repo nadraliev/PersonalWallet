@@ -68,7 +68,7 @@ class TransactionsListAdapter(private val context: Context,
             ButterKnife.bind(this, view)
             incomeColor = ContextCompat.getColor(view.context, R.color.colorEntryIncome)
             outcomeColor = ContextCompat.getColor(view.context, R.color.colorEntryOutcome)
-            noCategoryMsg = view.context.getString(R.string.main_transactions_list_no_category)
+            noCategoryMsg = view.context.getString(R.string.history_transactions_list_no_category)
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(sectionForPosition[adapterPosition], positionWithinSection[adapterPosition])
             }

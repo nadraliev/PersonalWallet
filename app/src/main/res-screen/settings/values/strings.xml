@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_title">Settings</string>
     <string name="settings_sync_label">Sync</string>
     <string name="settings_sync_hint">Sync your data across devices</string>
 </resources>

@@ -9,7 +9,7 @@ import soutvoid.com.personalwallet.R
  */
 enum class SectionData(@DrawableRes val iconResId: Int,
                        @StringRes val nameResId: Int) {
-    CATEGORIES(R.drawable.ic_tag_multiple_grey, R.string.main_section_categories_name),
-    REPORTS(R.drawable.ic_chart_arc_grey, R.string.main_section_reports_name),
-    LIMIT(R.drawable.ic_alert_grey, R.string.main_section_limit_name)
+    CATEGORIES(R.drawable.ic_tag_multiple_grey, R.string.history_section_categories_name),
+    REPORTS(R.drawable.ic_chart_arc_grey, R.string.history_section_reports_name),
+    LIMIT(R.drawable.ic_alert_grey, R.string.history_section_limit_name)
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="main_transactions_list_no_category">No category</string>
-    <string name="main_section_categories_name">Categories</string>
-    <string name="main_section_reports_name">Reports</string>
-    <string name="main_section_limit_name">Limit</string>
+    <string name="history_title">History</string>
+    <string name="history_transactions_list_no_category">No category</string>
+    <string name="history_section_categories_name">Categories</string>
+    <string name="history_section_reports_name">Reports</string>
+    <string name="history_section_limit_name">Limit</string>
 </resources>

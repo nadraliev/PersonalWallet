@@ -18,10 +18,11 @@ class SettingsPresenter(kodein: Kodein) : BasePresenter<SettingsView>(kodein) {
     }
 
     fun onChangeSyncState(enabled: Boolean) {
-        if (isSyncing && !enabled) {
+        if (isSyncing && enabled) {
             sharedPreferences.isSyncing = false
             sharedPreferences.userId = -1
-        } else if (!isSyncing && enabled) {
+            viewState?.setSyncState(false)
+        } else if (!isSyncing && !enabled) {
             viewState?.openLoginScreen()
         }
     }

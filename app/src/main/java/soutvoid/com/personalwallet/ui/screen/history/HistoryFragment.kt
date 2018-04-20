@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.View
 import butterknife.BindView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -20,9 +21,10 @@ import soutvoid.com.personalwallet.ui.screen.history.adapter.AddEntrySpeedDialAd
 import soutvoid.com.personalwallet.ui.screen.history.adapter.SectionsListAdapter
 import soutvoid.com.personalwallet.ui.screen.history.adapter.TransactionsListAdapter
 import soutvoid.com.personalwallet.ui.screen.history.data.SectionData
+import soutvoid.com.personalwallet.ui.screen.main.IToolbarAdapter
 import uk.co.markormesher.android_fab.FloatingActionButton
 
-class HistoryFragment : BaseFragment(), HistoryView {
+class HistoryFragment : BaseFragment(), HistoryView, IToolbarAdapter {
     companion object {
         const val TAG = "HistoryFragment"
 
@@ -32,11 +34,11 @@ class HistoryFragment : BaseFragment(), HistoryView {
     @InjectPresenter(type = PresenterType.WEAK)
     lateinit var mHistoryPresenter: HistoryPresenter
 
-    @BindView(R.id.main_add_entry_fab)
+    @BindView(R.id.history_add_entry_fab)
     lateinit var addEntryFab: FloatingActionButton
-    @BindView(R.id.main_transactions_list)
+    @BindView(R.id.history_transactions_list)
     lateinit var transactionsList: RecyclerView
-    @BindView(R.id.main_sections_list)
+    @BindView(R.id.history_sections_list)
     lateinit var sectionsList: RecyclerView
 
     private lateinit var transactionsListAdapter: TransactionsListAdapter
@@ -46,7 +48,7 @@ class HistoryFragment : BaseFragment(), HistoryView {
     fun providePresenter(): HistoryPresenter =
             HistoryPresenter(App.instance.kodein)
 
-    override fun getLayoutResId(): Int = R.layout.fragment_main
+    override fun getLayoutResId(): Int = R.layout.fragment_history
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,6 +80,10 @@ class HistoryFragment : BaseFragment(), HistoryView {
         sectionsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    override fun adaptToolbar(toolbar: Toolbar) {
+        activity?.title = getString(R.string.history_title)
+    }
+
     override fun openAddEntry(entryType: EntryType, transactionEntry: TransactionEntry?) {
         context?.let {
             startActivity(AddEntryActivity.getIntent(it, entryType, transactionEntry?.localId))
@@ -102,6 +108,5 @@ class HistoryFragment : BaseFragment(), HistoryView {
     override fun openLimits() {
 
     }
-
 
 }

@@ -17,7 +17,7 @@
             android:paddingTop="@dimen/main_sections_list_top_padding">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/main_sections_list"
+                android:id="@+id/history_sections_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/main_sections_list_horizontal_padding"
@@ -26,7 +26,7 @@
                 android:overScrollMode="never" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/main_transactions_list"
+                android:id="@+id/history_transactions_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
@@ -37,7 +37,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <uk.co.markormesher.android_fab.FloatingActionButton
-        android:id="@+id/main_add_entry_fab"
+        android:id="@+id/history_add_entry_fab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:buttonBackgroundColour="@color/colorAccent"
