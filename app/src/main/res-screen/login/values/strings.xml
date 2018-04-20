@@ -10,4 +10,5 @@
     <string name="login_email_is_invalid_error">Email is invalid</string>
     <string name="login_password_is_invalid_error">Password is invalid</string>
     <string name="login_password_too_small_error">Password must contain at least 8 symbols</string>
+    <string name="login_email_already_registered">User with this email is already registered</string>
 </resources>

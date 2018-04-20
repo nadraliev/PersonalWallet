@@ -1,5 +1,6 @@
 package soutvoid.com.personalwallet.ui.screen.login
 
+import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.view.View
 import android.widget.ProgressBar
@@ -8,6 +9,7 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.jakewharton.rxbinding2.widget.RxTextView
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.app.App
 import soutvoid.com.personalwallet.ui.base.BaseFragment
@@ -40,6 +42,20 @@ class LoginFragment : BaseFragment(), LoginView {
 
     override fun getLayoutResId(): Int = R.layout.fragment_login
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        emailTextInput.editText?.let {
+            RxTextView.textChangeEvents(it).doOnNext {
+                emailTextInput.isErrorEnabled = false
+            }.subscribe()
+        }
+        passwordTextInput.editText?.let {
+            RxTextView.textChangeEvents(it).doOnNext {
+                passwordTextInput.isErrorEnabled = false
+            }.subscribe()
+        }
+    }
+
     override fun showEmailIsInvalidError() {
         emailTextInput.isErrorEnabled = true
         emailTextInput.error = getString(R.string.login_email_is_invalid_error)
@@ -57,6 +73,16 @@ class LoginFragment : BaseFragment(), LoginView {
 
     override fun showLoginError() {
         errorText.text = getString(R.string.login_login_or_password_is_incorrect_error)
+        errorText.visibility = View.VISIBLE
+    }
+
+    override fun showEmailAlreadyRegisteredError() {
+        errorText.text = getString(R.string.login_email_already_registered)
+        errorText.visibility = View.VISIBLE
+    }
+
+    override fun showUnknownError() {
+        errorText.text = getString(R.string.common_error_unknown)
         errorText.visibility = View.VISIBLE
     }
 

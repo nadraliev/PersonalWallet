@@ -7,6 +7,7 @@ import com.github.salomonbrys.kodein.KodeinInjector
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 abstract class BasePresenter<T : BaseView>(kodein: Kodein? = null)
@@ -19,22 +20,41 @@ abstract class BasePresenter<T : BaseView>(kodein: Kodein? = null)
         kodein?.let { inject(it) }
     }
 
-    infix fun BasePresenter<*>.subscribeTo(observable: Observable<*>) {
-        compositeDisposable.add(observable.subscribe())
+    fun <T> Observable<T>.subscribeTo(onNext: ((T) -> Unit)? = null,
+                                      onError: ((Throwable) -> Unit)? = null,
+                                      onComplete: (() -> Unit)? = null) {
+        compositeDisposable.add(doSubscribe(onNext, onError, onComplete))
     }
 
-    infix fun subscribeInBackgroundTo(observable: Observable<*>) {
-        compositeDisposable.add(observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe())
+    fun <T> Observable<T>.subscribeAsyncTo(onNext: ((T) -> Unit)? = null,
+                                           onError: ((Throwable) -> Unit)? = null,
+                                           onComplete: (() -> Unit)? = null) {
+        compositeDisposable.add(async().doSubscribe(onNext, onError, onComplete))
     }
 
-    infix fun subscribeWithoutFreezingTo(observable: Observable<*>) {
-        observable.subscribe()
+    fun <T> Observable<T>.subscribeWithoutFreezingTo(onNext: ((T) -> Unit)? = null,
+                                                     onError: ((Throwable) -> Unit)? = null,
+                                                     onComplete: (() -> Unit)? = null) {
+        doSubscribe(onNext, onError, onComplete)
     }
 
-    infix fun subscribeWithoutFreezingInBackgroundTo(observable: Observable<*>) {
-        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+    fun <T> Observable<T>.subscribeWithoutFreezingAsyncTo(onNext: ((T) -> Unit)? = null,
+                                                          onError: ((Throwable) -> Unit)? = null,
+                                                          onComplete: (() -> Unit)? = null) {
+        async().doSubscribe(onNext, onError, onComplete)
     }
+
+    fun <T> Observable<T>.async(): Observable<T> =
+            subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    private fun <T> Observable<T>.doSubscribe(onNext: ((T) -> Unit)? = null,
+                                              onError: ((Throwable) -> Unit)? = null,
+                                              onComplete: (() -> Unit)? = null): Disposable =
+            subscribe(
+                    { onNext?.invoke(it) },
+                    { onError?.invoke(it) },
+                    { onComplete?.invoke() }
+            )
 
     override fun onDestroy() {
         compositeDisposable.clear()

@@ -27,7 +27,7 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
             categories = it.toMutableList()
             viewState?.showCategories(categories)
         }
-        this subscribeTo categoriesObservable
+        categoriesObservable.subscribeTo()
     }
 
     fun onCategoryDelete(position: Int) {
@@ -37,11 +37,11 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
             transactions.filter { it.category?.localId == categoryToDelete.localId }.forEach {
                 transactionEntryRepository.delete(it.localId)
             }
-            this subscribeTo categoriesRepository.delete(categoryToDelete.localId)
+            categoriesRepository.delete(categoryToDelete.localId).subscribeTo()
             categories.removeAt(position)
             viewState?.removeCategory(position)
         }
-        this subscribeTo deleteCategoryObservable
+        deleteCategoryObservable.subscribeTo()
     }
 
     fun onCategoryEdit(position: Int) {
@@ -55,7 +55,7 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
 
     private fun doChangeCategoryName(category: Category, newName: String) {
         category.name = newName
-        this subscribeTo categoriesRepository.update(category)
+        categoriesRepository.update(category).subscribeTo()
     }
 
     fun onAddCategory() {
@@ -67,7 +67,7 @@ class CategoriesPresenter(kodein: Kodein) : BasePresenter<CategoriesView>(kodein
 
     private fun doAddCategory(name: String): Category {
         val newCategory = Category(name)
-        this subscribeTo categoriesRepository.create(newCategory)
+        categoriesRepository.create(newCategory).subscribeTo()
         categories.add(newCategory)
         return newCategory
     }

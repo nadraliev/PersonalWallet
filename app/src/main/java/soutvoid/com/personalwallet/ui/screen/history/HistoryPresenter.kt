@@ -29,7 +29,7 @@ class HistoryPresenter(kodein: Kodein) : BasePresenter<HistoryView>(kodein) {
                             .map { Pair(it.key, it.value) }.sortedByDescending { it.first }
                     viewState?.showTransactions(groupedTransactions)
                 }
-        this subscribeTo getAllFlowable
+        getAllFlowable.subscribeTo()
     }
 
     fun onAddEntry(entryType: EntryType) {

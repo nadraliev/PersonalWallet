@@ -7,6 +7,8 @@ interface LoginView : BaseView {
     fun showPasswordIsInvalidError()
     fun showPasswordTooSmallError()
     fun showLoginError()
+    fun showEmailAlreadyRegisteredError()
+    fun showUnknownError()
     fun hideLoginError()
     fun setButtonsBlocked(blocked: Boolean)
     fun setProgressEnabled(enabled: Boolean)

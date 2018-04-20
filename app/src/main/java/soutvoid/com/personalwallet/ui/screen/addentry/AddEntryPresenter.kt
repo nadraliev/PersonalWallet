@@ -55,13 +55,13 @@ class AddEntryPresenter(kodein: Kodein,
                 categoryToChoose = null
             }
         }
-        this subscribeTo categoriesObservable
+        categoriesObservable.subscribeTo()
     }
 
     fun onNewCategoryEntered(name: CharSequence) {
         if (categories.none { it.name == name.toString() }) {
             categoryToChoose = name.toString()
-            this subscribeTo categoryRepository.create(Category(name.toString()))
+            categoryRepository.create(Category(name.toString())).subscribeTo()
             loadCategories()
         }
     }
@@ -73,11 +73,11 @@ class AddEntryPresenter(kodein: Kodein,
                     data.name, category, data.dateAndTimeMillis / 1000,
                     data.moneyValue.toLong(), "")
             if (transactionEntry == null) {
-                this subscribeTo transactionEntryRepository.create(newTransactionEntry)
+                transactionEntryRepository.create(newTransactionEntry).subscribeTo()
             } else {
                 transactionEntry?.let { transactionEntry ->
                     newTransactionEntry.localId = transactionEntry.localId
-                    this subscribeTo transactionEntryRepository.update(newTransactionEntry)
+                    transactionEntryRepository.update(newTransactionEntry).subscribeTo()
                 }
             }
             viewState?.finish()

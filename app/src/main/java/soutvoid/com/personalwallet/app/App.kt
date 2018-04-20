@@ -19,6 +19,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import soutvoid.com.personalwallet.interactor.authorization.local.AuthorizationRepository
+import soutvoid.com.personalwallet.interactor.authorization.local.IAuthorizationRepository
+import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationApi
 import soutvoid.com.personalwallet.interactor.transactionentry.local.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
@@ -89,5 +92,7 @@ class App : Application(), KodeinAware {
         }
         bind<CategoryApi>() with singleton { instance<Retrofit>().create(CategoryApi::class.java) }
         bind<SharedPreferencesWrapper>() with singleton { SharedPreferencesWrapper(this@App) }
+        bind<AuthorizationApi>() with singleton { instance<Retrofit>().create(AuthorizationApi::class.java) }
+        bind<IAuthorizationRepository>() with singleton { AuthorizationRepository() }
     }
 }

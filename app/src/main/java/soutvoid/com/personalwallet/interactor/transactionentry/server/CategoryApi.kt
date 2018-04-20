@@ -12,6 +12,6 @@ interface CategoryApi {
     }
 
     @POST("$CATEGORIES_URL/add")
-    fun addCategory(@Body category: Category): Observable<CategoryResponse>
+    fun addCategory(@Body category: Category): Observable<CategoryDto>
 
 }
