@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import soutvoid.com.personalwallet.interactor.authorization.local.AuthorizationRepository
 import soutvoid.com.personalwallet.interactor.authorization.local.IAuthorizationRepository
 import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationApi
+import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationInterceptor
 import soutvoid.com.personalwallet.interactor.transactionentry.local.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
@@ -81,8 +82,10 @@ class App : Application(), KodeinAware {
         bind<ITransactionEntryRepository>() with singleton { TransactionEntryRepository() }
         bind<JobManager>() with singleton { JobManager(Configuration.Builder(this@App).build()) }
         bind<OkHttpClient>() with singleton {
-            OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                    .addInterceptor(HttpLoggingInterceptor()).build()
+            OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS)
+                    .addInterceptor(AuthorizationInterceptor())
+                    .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+                    .build()
         }
         bind<Retrofit>() with singleton {
             Retrofit.Builder()

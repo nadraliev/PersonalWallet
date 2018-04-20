@@ -1,6 +1,8 @@
 package soutvoid.com.personalwallet.ui.screen.settings
 
+import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.View
 import android.widget.Switch
 import butterknife.BindView
 import butterknife.OnClick
@@ -28,6 +30,11 @@ class SettingsFragment : BaseFragment(), SettingsView, IToolbarAdapter {
     @ProvidePresenter(type = PresenterType.WEAK)
     fun providePresenter(): SettingsPresenter =
             SettingsPresenter(App.instance.kodein)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        syncSwitch.isClickable = false
+    }
 
     override fun getLayoutResId(): Int = R.layout.fragment_settings
 

@@ -2,14 +2,18 @@ package soutvoid.com.personalwallet.ui.screen.login
 
 import android.util.Patterns
 import com.arellomobile.mvp.InjectViewState
+import com.birbit.android.jobqueue.JobManager
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import retrofit2.HttpException
 import soutvoid.com.personalwallet.domain.user.User
 import soutvoid.com.personalwallet.interactor.authorization.local.IAuthorizationRepository
 import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationApi
+import soutvoid.com.personalwallet.interactor.authorization.server.TokensDto
+import soutvoid.com.personalwallet.interactor.authorization.server.ValidateTokensJob
 import soutvoid.com.personalwallet.interactor.util.toDto
 import soutvoid.com.personalwallet.interactor.util.toEntity
 import soutvoid.com.personalwallet.ui.base.BasePresenter
@@ -25,6 +29,7 @@ class LoginPresenter(kodein: Kodein) : BasePresenter<LoginView>(kodein) {
     private val sharedPreferences: SharedPreferencesWrapper by instance()
     private val authorizationRepository: IAuthorizationRepository by instance()
     private val authorizationApi: AuthorizationApi by instance()
+    private val jobManager: JobManager by instance()
 
     fun onLoginClick(email: String, password: String) {
         if (generalValidate(email, password)) {
@@ -64,8 +69,11 @@ class LoginPresenter(kodein: Kodein) : BasePresenter<LoginView>(kodein) {
         val userDto = User(email = email, password = password).toDto()
         val loginObservable = authorizationApi.login(userDto)
                 .flatMap {
-                    authorizationRepository.deleteAll()
-                    Observable.just(it)
+                    Observable.combineLatest(
+                            authorizationRepository.deleteAll(),
+                            Observable.just(it),
+                            BiFunction { t1: Any, t2: TokensDto -> t2 }
+                    )
                 }
                 .flatMap { authorizationRepository.create(it.toEntity()) }
 
@@ -75,6 +83,7 @@ class LoginPresenter(kodein: Kodein) : BasePresenter<LoginView>(kodein) {
                     viewState?.setProgressEnabled(false)
                     sharedPreferences.isSyncing = true
                     sharedPreferences.userId = it.userId
+                    jobManager.addJobInBackground(ValidateTokensJob())
                     viewState?.finish()
                 },
                 onError = {
