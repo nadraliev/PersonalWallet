@@ -6,7 +6,7 @@ import soutvoid.com.personalwallet.interactor.BaseServerJob
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.util.toEntity
 
-class AddCategoryJob(val category: Category) : BaseServerJob(0) {
+class GetAllCategoriesJob(val category: Category) : BaseServerJob(0) {
 
     private val categoryApi: CategoryApi
         get() = kodein.instance()
@@ -14,8 +14,11 @@ class AddCategoryJob(val category: Category) : BaseServerJob(0) {
         get() = kodein.instance()
 
     override fun onRun() {
-        val newCategory = categoryApi.addCategory(category).blockingFirst().toEntity()
-        categoryRepository.update(category.apply { id = newCategory.id }).blockingSubscribe()
+        val categories = categoryApi.getAll().blockingSingle().map { it.toEntity() }
+        categoryRepository.deleteAll().blockingFirst(Category())
+        categories.forEach {
+            categoryRepository.create(it).blockingSubscribe()
+        }
     }
 
     override fun onAdded() {

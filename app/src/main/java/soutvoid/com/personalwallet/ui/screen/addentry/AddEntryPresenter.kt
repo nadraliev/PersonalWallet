@@ -1,6 +1,7 @@
 package soutvoid.com.personalwallet.ui.screen.addentry
 
 import com.arellomobile.mvp.InjectViewState
+import com.birbit.android.jobqueue.JobManager
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.instance
 import com.orhanobut.logger.Logger
@@ -9,6 +10,7 @@ import soutvoid.com.personalwallet.domain.transactionentry.EntryType
 import soutvoid.com.personalwallet.domain.transactionentry.TransactionEntry
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
+import soutvoid.com.personalwallet.interactor.transactionentry.server.AddCategoryJob
 import soutvoid.com.personalwallet.ui.base.BasePresenter
 import soutvoid.com.personalwallet.ui.screen.addentry.data.NewEntryData
 
@@ -23,6 +25,7 @@ class AddEntryPresenter(kodein: Kodein,
     var categories: List<Category> = listOf()
     var categoryToChoose: String? = null
     var transactionEntry: TransactionEntry? = null
+    val jobManager: JobManager by instance()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -61,7 +64,8 @@ class AddEntryPresenter(kodein: Kodein,
     fun onNewCategoryEntered(name: CharSequence) {
         if (categories.none { it.name == name.toString() }) {
             categoryToChoose = name.toString()
-            categoryRepository.create(Category(name.toString())).subscribeTo()
+            val newCategory = categoryRepository.create(Category(name.toString())).blockingFirst()
+            jobManager.addJobInBackground(AddCategoryJob(newCategory))
             loadCategories()
         }
     }
