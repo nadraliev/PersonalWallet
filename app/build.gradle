@@ -70,6 +70,7 @@ dependencies {
     implementation "com.github.salomonbrys.kodein:kodein:$kodein_version"
     implementation "com.github.salomonbrys.kodein:kodein-android:$kodein_version"
     implementation "com.jakewharton:butterknife:$butterknife_version"
+    implementation 'com.google.android.gms:play-services-gcm:15.0.0'
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     // Anko Commons

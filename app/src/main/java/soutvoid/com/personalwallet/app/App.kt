@@ -2,12 +2,17 @@ package soutvoid.com.personalwallet.app
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.support.multidex.MultiDex
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
+import com.birbit.android.jobqueue.scheduling.FrameworkJobSchedulerService
+import com.birbit.android.jobqueue.scheduling.GcmJobSchedulerService
 import com.facebook.stetho.Stetho
 import com.github.salomonbrys.kodein.*
 import com.github.salomonbrys.kodein.android.autoAndroidModule
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -28,6 +33,8 @@ import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRe
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.TransactionEntryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.server.CategoryApi
+import soutvoid.com.personalwallet.interactor.util.GcmJobService
+import soutvoid.com.personalwallet.interactor.util.JobService
 import soutvoid.com.personalwallet.ui.util.SharedPreferencesWrapper
 import soutvoid.com.personalwallet.util.BASE_URL
 import java.util.concurrent.TimeUnit
@@ -80,7 +87,20 @@ class App : Application(), KodeinAware {
 
         bind<ICategoryRepository>() with singleton { CategoryRepository() }
         bind<ITransactionEntryRepository>() with singleton { TransactionEntryRepository() }
-        bind<JobManager>() with singleton { JobManager(Configuration.Builder(this@App).build()) }
+        bind<JobManager>() with singleton {
+            val builder = Configuration.Builder(this@App)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                builder.scheduler(FrameworkJobSchedulerService
+                        .createSchedulerFor(this@App, JobService::class.java))
+            else {
+                val enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this@App)
+                if (enableGcm == ConnectionResult.SUCCESS) {
+                    builder.scheduler(GcmJobSchedulerService.createSchedulerFor(this@App,
+                            GcmJobService::class.java))
+                }
+            }
+            return@singleton JobManager(builder.build())
+        }
         bind<OkHttpClient>() with singleton {
             OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS)
                     .addInterceptor(AuthorizationInterceptor())
