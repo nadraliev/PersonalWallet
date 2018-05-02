@@ -15,6 +15,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.PresenterType
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.sembozdemir.permissionskt.askPermissions
+import com.stfalcon.frescoimageviewer.ImageViewer
 import soutvoid.com.personalwallet.R
 import soutvoid.com.personalwallet.app.App
 import soutvoid.com.personalwallet.ui.base.BaseFragment
@@ -99,8 +100,23 @@ class ChecksFragment : BaseFragment(), ChecksView, IToolbarAdapter {
         }
     }
 
+    override fun openCheckFullscreen(file: File) {
+        var pos = checksAdapter.photos.indexOfFirst { it == file }
+        if (pos == -1) pos = 0
+        context?.let {
+            ImageViewer.Builder(context, checksAdapter.photos.map { file ->
+                FileProvider.getUriForFile(it, "com.soutvoid.fileprovider", file)
+            })
+                    .setStartPosition(pos)
+                    .show()
+        }
+    }
+
     private fun initChecksList() {
         checksList.adapter = checksAdapter
+        checksAdapter.onItemClick = {
+            mChecksPresenter.onCheckClick(checksAdapter.photos[it])
+        }
         checksList.layoutManager = GridLayoutManager(context, 2)
     }
 }

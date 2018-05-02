@@ -19,6 +19,10 @@ class ChecksPresenter(kodein: Kodein) : BasePresenter<ChecksView>(kodein) {
         viewState?.takeNewPhoto()
     }
 
+    fun onCheckClick(file: File) {
+        viewState?.openCheckFullscreen(file)
+    }
+
     private fun loadChecks() {
         viewState?.getAllChecks {
             checks = it.toMutableList()

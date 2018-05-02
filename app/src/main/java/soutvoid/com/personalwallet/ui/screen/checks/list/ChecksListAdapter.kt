@@ -16,7 +16,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChecksListAdapter(var photos: MutableList<File> = mutableListOf())
+class ChecksListAdapter(var photos: MutableList<File> = mutableListOf(),
+                        var onItemClick: ((Int) -> Unit)? = null)
     : RecyclerView.Adapter<ChecksListAdapter.CheckViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckViewHolder {
@@ -39,6 +40,7 @@ class ChecksListAdapter(var photos: MutableList<File> = mutableListOf())
 
         init {
             ButterKnife.bind(this, view)
+            view.setOnClickListener { onItemClick?.invoke(adapterPosition) }
         }
 
         fun bind(file: File) {

@@ -7,4 +7,5 @@ interface ChecksView : BaseView {
     fun takeNewPhoto()
     fun showChecks(checks: List<File>)
     fun getAllChecks(callback: (List<File>) -> Unit)
+    fun openCheckFullscreen(file: File)
 }

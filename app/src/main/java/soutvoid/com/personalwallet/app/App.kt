@@ -8,6 +8,7 @@ import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
 import com.birbit.android.jobqueue.scheduling.FrameworkJobSchedulerService
 import com.birbit.android.jobqueue.scheduling.GcmJobSchedulerService
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.stetho.Stetho
 import com.github.salomonbrys.kodein.*
 import com.github.salomonbrys.kodein.android.autoAndroidModule
@@ -55,6 +56,7 @@ class App : Application(), KodeinAware {
         initLogger()
         initRealm()
         initStetho()
+        Fresco.initialize(this)
     }
 
     private fun initRealm() {
