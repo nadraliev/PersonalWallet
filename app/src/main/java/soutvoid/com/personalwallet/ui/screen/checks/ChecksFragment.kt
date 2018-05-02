@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -109,6 +110,12 @@ class ChecksFragment : BaseFragment(), ChecksView, IToolbarAdapter {
             })
                     .setStartPosition(pos)
                     .show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode != AppCompatActivity.RESULT_OK) {
+            newImageFile?.delete()
         }
     }
 
