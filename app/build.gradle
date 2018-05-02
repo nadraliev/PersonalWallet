@@ -13,6 +13,8 @@ apply plugin: 'realm-android'
 repositories {
     maven { url 'https://github.com/WickeDev/stetho-realm/raw/master/maven-repo'  }
     maven { url "https://jitpack.io" }
+    mavenCentral()
+    google()
 }
 
 android {
@@ -70,8 +72,9 @@ dependencies {
     implementation "com.github.salomonbrys.kodein:kodein:$kodein_version"
     implementation "com.github.salomonbrys.kodein:kodein-android:$kodein_version"
     implementation "com.jakewharton:butterknife:$butterknife_version"
-    implementation 'com.google.android.gms:play-services-gcm:15.0.0'
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    implementation 'com.google.android.gms:play-services-gcm:15.0.0'
+    implementation 'com.github.sembozdemir:PermissionsKt:1.0.0'
 
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
