@@ -87,9 +87,12 @@ class AddEntryFragment : BaseFragment(), AddEntryView, Saveable {
     }
 
     override fun setTitleForEntryType(entryType: EntryType) {
-        val stringResId = when (entryType) {
-            is Income -> R.string.add_entry_income_title
-            is Outcome -> R.string.add_entry_outcome_title
+        val stringResId = when (entryType to (transactionEntry == null)) {
+            Income to true -> R.string.add_entry_income_title
+            Income to false -> R.string.edit_entry_income_title
+            Outcome to true -> R.string.add_entry_outcome_title
+            Outcome to false -> R.string.edit_entry_outcome_title
+            else -> 0
         }
         activity?.setTitle(stringResId)
     }

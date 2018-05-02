@@ -6,3 +6,4 @@ package soutvoid.com.personalwallet.util
 const val ENTRY_TYPE = "entryType"
 const val TRANSACTION_ENTRY_ID = "transactionEntry"
 const val BASE_URL = "https://personalwallet.herokuapp.com"
+const val GOAL_ID = "goalId"

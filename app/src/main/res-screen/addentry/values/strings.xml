@@ -2,6 +2,8 @@
 <resources>
     <string name="add_entry_income_title">Add income</string>
     <string name="add_entry_outcome_title">Add outcome</string>
+    <string name="edit_entry_income_title">Edit income</string>
+    <string name="edit_entry_outcome_title">Edit outcome</string>
     <string name="add_entry_name_hint">Name</string>
     <string name="add_entry_value_hint">Value</string>
     <string name="add_entry_add_category_option">Add category</string>

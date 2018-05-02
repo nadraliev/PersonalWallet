@@ -1,16 +1,13 @@
-package soutvoid.com.personalwallet.ui.screen.goals
+package soutvoid.com.personalwallet.ui.screen.addgoal
 
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import soutvoid.com.personalwallet.domain.goal.Goal
 import soutvoid.com.personalwallet.ui.base.BaseView
 
-interface GoalsView : BaseView {
+interface AddGoalView : BaseView {
     @StateStrategyType(SkipStrategy::class)
-    fun openGoalScreen(goal: Goal?)
+    fun finish()
 
-    fun showGoals(goals: List<Goal>)
-    fun removeGoal(goalLocalId: Long)
-    fun updateGoal(goal: Goal)
-
+    fun fillFieldsForEdit(goal: Goal)
 }

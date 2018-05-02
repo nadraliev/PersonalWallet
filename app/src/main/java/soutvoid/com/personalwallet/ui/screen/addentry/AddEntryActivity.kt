@@ -60,7 +60,7 @@ class AddEntryActivity : ActivityWithToolbar() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = menuInflater
-        menuInflater.inflate(R.menu.ok_menu, menu)
+        menuInflater.inflate(R.menu.ok_menu_light, menu)
         return true
     }
 

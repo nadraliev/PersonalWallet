@@ -29,6 +29,8 @@ import soutvoid.com.personalwallet.interactor.authorization.local.AuthorizationR
 import soutvoid.com.personalwallet.interactor.authorization.local.IAuthorizationRepository
 import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationApi
 import soutvoid.com.personalwallet.interactor.authorization.server.AuthorizationInterceptor
+import soutvoid.com.personalwallet.interactor.goal.local.GoalRepository
+import soutvoid.com.personalwallet.interactor.goal.local.IGoalRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.CategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ICategoryRepository
 import soutvoid.com.personalwallet.interactor.transactionentry.local.ITransactionEntryRepository
@@ -121,5 +123,6 @@ class App : Application(), KodeinAware {
         bind<SharedPreferencesWrapper>() with singleton { SharedPreferencesWrapper(this@App) }
         bind<AuthorizationApi>() with singleton { instance<Retrofit>().create(AuthorizationApi::class.java) }
         bind<IAuthorizationRepository>() with singleton { AuthorizationRepository() }
+        bind<IGoalRepository>() with singleton { GoalRepository() }
     }
 }
