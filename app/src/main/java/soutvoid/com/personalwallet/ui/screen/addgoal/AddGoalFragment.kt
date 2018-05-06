@@ -126,7 +126,7 @@ class AddGoalFragment : BaseFragment(), AddGoalView, Saveable {
     }
 
     @OnItemSelected(R.id.add_goal_reminer_period)
-    fun onReminderPeriodSelected(parent: AdapterView<*>, itemSelected: View, index: Int, selectedId: Long) {
+    fun onReminderPeriodSelected(parent: AdapterView<*>?, itemSelected: View?, index: Int, selectedId: Long) {
         selectedReminderPeriodIndex = index
     }
 }

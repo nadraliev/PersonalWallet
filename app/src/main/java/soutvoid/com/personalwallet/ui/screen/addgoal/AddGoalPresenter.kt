@@ -13,11 +13,28 @@ class AddGoalPresenter(kodein: Kodein, val goalLocalId: Long? = 0)
     : BasePresenter<AddGoalView>(kodein) {
 
     private val goalRepository: IGoalRepository by instance()
+    private var existingGoal: Goal? = null
+
+    override fun attachView(view: AddGoalView?) {
+        super.attachView(view)
+        if (goalLocalId != null) {
+            loadExistingGoal()
+        }
+    }
 
     fun save(data: GoalData) {
         if (validate(data)) {
             doSave(data)
             viewState?.finish()
+        }
+    }
+
+    private fun loadExistingGoal() {
+        goalLocalId?.let {
+            existingGoal = goalRepository.getById(goalLocalId).blockingFirst()
+            existingGoal?.let {
+                viewState?.fillFieldsForEdit(it)
+            }
         }
     }
 
@@ -39,7 +56,7 @@ class AddGoalPresenter(kodein: Kodein, val goalLocalId: Long? = 0)
     private fun doSave(data: GoalData) {
         val goal = convertData(data)
         if (goalLocalId != null)
-            doUpdateExistingGoal(goal, goalLocalId)
+            doUpdateExistingGoal(goal)
         else
             doCreateNewGoal(goal)
     }
@@ -55,15 +72,14 @@ class AddGoalPresenter(kodein: Kodein, val goalLocalId: Long? = 0)
         goalRepository.create(data).subscribe()
     }
 
-    private fun doUpdateExistingGoal(data: Goal, localId: Long) {
-        val existingGoal = goalRepository.getById(localId).blockingFirst()
-        existingGoal.apply {
+    private fun doUpdateExistingGoal(data: Goal) {
+        existingGoal?.apply {
             name = data.name
             targetMoneyValue = data.targetMoneyValue
             period = data.period
             reminedIntervalSec = data.reminedIntervalSec
+            goalRepository.update(this)
         }
-        goalRepository.update(existingGoal)
     }
 
 }
