@@ -22,6 +22,8 @@ sealed class EntryType : Serializable {
         is Outcome -> TYPE_OUTCOME_NAME
     }
 
+    override fun equals(other: Any?): Boolean = toString() == other?.toString()
+
     override fun toString(): String = getName()
 }
 

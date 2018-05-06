@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.addentry.widget
+package soutvoid.com.personalwallet.ui.common.widget
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -35,6 +35,12 @@ class ChooseDateSectionView : ConstraintLayout {
     lateinit var timeTv: TextView
 
     var calendar: Calendar by serialState(Calendar.getInstance())
+
+    var datePrefix: String = ""
+        set(value) {
+            field = value
+            updateDateAndTime(calendar.timeInMillis)
+        }
 
     init {
         View.inflate(context, R.layout.view_choose_date_section, this)
@@ -89,7 +95,7 @@ class ChooseDateSectionView : ConstraintLayout {
     private fun updateDateAndTime(millis: Long) {
         val dateFormat = SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault())
         val timeFormat = SimpleDateFormat.getTimeInstance(SHORT, Locale.getDefault())
-        dateTv.text = dateFormat.format(Date(millis))
+        dateTv.text = "$datePrefix${dateFormat.format(Date(millis))}"
         timeTv.text = timeFormat.format(Date(millis))
     }
 

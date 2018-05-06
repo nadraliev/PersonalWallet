@@ -2,4 +2,24 @@
 <resources>
     <string name="add_goal_title">Add goal</string>
     <string name="edit_goal_title">Edit goal</string>
+    <string name="add_goal_reminder_label">Remind me every</string>
+    <plurals name="add_goal_reminder_period_day_label">
+        <item quantity="one">Day</item>
+        <item quantity="other">Days</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_week_label">
+        <item quantity="one">Week</item>
+        <item quantity="other">Weeks</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_month_label">
+        <item quantity="one">Month</item>
+        <item quantity="other">Months</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_year_label">
+        <item quantity="one">Year</item>
+        <item quantity="other">Years</item>
+    </plurals>
+    <string name="add_goal_date_prefix">"By "</string>
+    <string name="add_goal_invalid_target_value_error">Invalid value</string>
+    <string name="add_goal_invalid_reminder_value_error">Invalid reminder period</string>
 </resources>

@@ -10,4 +10,7 @@ interface AddGoalView : BaseView {
     fun finish()
 
     fun fillFieldsForEdit(goal: Goal)
+
+    fun showInvalidReminderValueError()
+    fun showInvalidTargetValueError()
 }

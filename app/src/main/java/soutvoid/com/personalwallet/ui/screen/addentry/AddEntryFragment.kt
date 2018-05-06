@@ -19,11 +19,11 @@ import soutvoid.com.personalwallet.domain.transactionentry.Outcome
 import soutvoid.com.personalwallet.ui.base.BaseFragment
 import soutvoid.com.personalwallet.ui.common.ActivityWithToolbar
 import soutvoid.com.personalwallet.ui.common.Saveable
+import soutvoid.com.personalwallet.ui.common.widget.ChooseDateSectionView
+import soutvoid.com.personalwallet.ui.common.widget.InputNameSectionView
+import soutvoid.com.personalwallet.ui.common.widget.InputValueSectionView
 import soutvoid.com.personalwallet.ui.screen.addentry.data.NewEntryData
 import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseCategorySectionView
-import soutvoid.com.personalwallet.ui.screen.addentry.widget.ChooseDateSectionView
-import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputNameSectionView
-import soutvoid.com.personalwallet.ui.screen.addentry.widget.InputValueSectionView
 import soutvoid.com.personalwallet.ui.util.delegates.argument
 import soutvoid.com.personalwallet.ui.util.doIfSdkAtLeast
 import soutvoid.com.personalwallet.ui.util.getColorResId

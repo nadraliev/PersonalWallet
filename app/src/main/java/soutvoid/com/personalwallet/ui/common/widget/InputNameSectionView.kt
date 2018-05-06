@@ -1,4 +1,4 @@
-package soutvoid.com.personalwallet.ui.screen.addentry.widget
+package soutvoid.com.personalwallet.ui.common.widget
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
