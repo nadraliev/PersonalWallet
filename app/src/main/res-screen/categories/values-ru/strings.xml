@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories_title">Категории</string>
+    <string name="categories_edit_name_dialog_title">Изменить имя</string>
+    <string name="categories_edit_name_dialog_hint">Введите новое имя</string>
+    <string name="categories_new_category_dialog_title">Новая категория</string>
+    <string name="categories_new_category_dialog_name_hint">Введите имя</string>
+</resources>

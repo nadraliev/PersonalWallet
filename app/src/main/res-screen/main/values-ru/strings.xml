@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_navigation_history_label">История</string>
+    <string name="bottom_navigation_goals_label">Цели</string>
+    <string name="bottom_navigation_checks_label">Чеки</string>
+    <string name="bottom_navigation_settings_label">Настройки</string>
+</resources>

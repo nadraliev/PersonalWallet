@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ЛичныйКошелек</string>
+    <string name="common_entry_type_name_income">Доход</string>
+    <string name="common_entry_type_name_outcome">Расход</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_today">Сегодня</string>
+    <string name="common_yesterday">Вчера</string>
+    <string name="common_error_unknown">Неизвестная ошибка</string>
+</resources>

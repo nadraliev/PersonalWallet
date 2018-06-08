@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_goal_title">Добавить цель</string>
+    <string name="edit_goal_title">Изменить цель</string>
+    <string name="add_goal_reminder_label">Напомни мне каждые</string>
+    <plurals name="add_goal_reminder_period_day_label">
+        <item quantity="one">День</item>
+        <item quantity="few">Дня</item>
+        <item quantity="many">Дней</item>
+        <item quantity="other">Дней</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_week_label">
+        <item quantity="one">Неделя</item>
+        <item quantity="few">Недели</item>
+        <item quantity="many">Недель</item>
+        <item quantity="other">Недель</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_month_label">
+        <item quantity="one">Месяц</item>
+        <item quantity="few">Месяца</item>
+        <item quantity="many">Месяцев</item>
+        <item quantity="other">Месяцев</item>
+    </plurals>
+    <plurals name="add_goal_reminder_period_year_label">
+        <item quantity="one">Год</item>
+        <item quantity="few">Года</item>
+        <item quantity="many">Лет</item>
+        <item quantity="other">Лет</item>
+    </plurals>
+    <string name="add_goal_date_prefix">"К "</string>
+    <string name="add_goal_invalid_target_value_error">Некорректное значение</string>
+    <string name="add_goal_invalid_reminder_value_error">Некорректный период напоминания</string>
+</resources>

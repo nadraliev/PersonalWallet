@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_entry_income_title">Добавить доход</string>
+    <string name="add_entry_outcome_title">Добавить расход</string>
+    <string name="edit_entry_income_title">Изменить доход</string>
+    <string name="edit_entry_outcome_title">Изменить расход</string>
+    <string name="add_entry_name_hint">Имя</string>
+    <string name="add_entry_value_hint">Значение</string>
+    <string name="add_entry_add_category_option">Добавить категорию</string>
+    <string name="add_entry_new_category_hint">Введите имя категории</string>
+    <string name="add_entry_blank_name_error">Имя не может быть пустым</string>
+    <string name="add_entry_invalid_value_error">Некорректное значени</string>
+    <string name="add_entry_choose_category">Выберите категорию</string>
+</resources>
